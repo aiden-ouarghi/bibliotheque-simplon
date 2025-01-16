@@ -399,4 +399,10 @@ FodyWeavers.xsd
 # JetBrains Rider
 *.sln.iml
 
+# bdd EXCLUES
+*.db
+*.db-shm
+*.db-wal
+migrations/
+
 # End of https://www.toptal.com/developers/gitignore/api/csharp
