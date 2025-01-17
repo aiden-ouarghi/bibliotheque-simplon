@@ -1,0 +1,82 @@
+[
+  {
+    "Id": 100,
+    "Auteur": "George Orwell",
+    "Titre": "1984",
+    "ISBN": "9780451524935",
+    "Edition": "Secker & Warburg",
+    "StatutEmprunt": false
+  },
+  {
+    "Id": 101,
+    "Auteur": "Harper Lee",
+    "Titre": "To Kill a Mockingbird",
+    "ISBN": "9780060935467",
+    "Edition": "J.B. Lippincott & Co.",
+    "StatutEmprunt": true
+  },
+  {
+    "Id": 102,
+    "Auteur": "J.K. Rowling",
+    "Titre": "Harry Potter and the Philosopher's Stone",
+    "ISBN": "9780747532699",
+    "Edition": "Bloomsbury",
+    "StatutEmprunt": false
+  },
+  {
+    "Id": 103,
+    "Auteur": "J.R.R. Tolkien",
+    "Titre": "The Hobbit",
+    "ISBN": "9780345339683",
+    "Edition": "George Allen & Unwin",
+    "StatutEmprunt": true
+  },
+  {
+    "Id": 104,
+    "Auteur": "F. Scott Fitzgerald",
+    "Titre": "The Great Gatsby",
+    "ISBN": "9780743273565",
+    "Edition": "Charles Scribner's Sons",
+    "StatutEmprunt": false
+  },
+  {
+    "Id": 105,
+    "Auteur": "Jane Austen",
+    "Titre": "Pride and Prejudice",
+    "ISBN": "9780141439518",
+    "Edition": "T. Egerton",
+    "StatutEmprunt": false
+  },
+  {
+    "Id": 106,
+    "Auteur": "Mark Twain",
+    "Titre": "The Adventures of Huckleberry Finn",
+    "ISBN": "9780486280615",
+    "Edition": "Chatto & Windus / Charles L. Webster And Company",
+    "StatutEmprunt": true
+  },
+  {
+    "Id": 107,
+    "Auteur": "Mary Shelley",
+    "Titre": "Frankenstein",
+    "ISBN": "9780486282114",
+    "Edition": "Lackington, Hughes, Harding, Mavor & Jones",
+    "StatutEmprunt": false
+  },
+  {
+    "Id": 108,
+    "Auteur": "Leo Tolstoy",
+    "Titre": "War and Peace",
+    "ISBN": "9780199232765",
+    "Edition": "The Russian Messenger",
+    "StatutEmprunt": true
+  },
+  {
+    "Id": 109,
+    "Auteur": "Herman Melville",
+    "Titre": "Moby-Dick",
+    "ISBN": "9780142437247",
+    "Edition": "Harper & Brothers",
+    "StatutEmprunt": false
+  }
+]

@@ -6,5 +6,8 @@
         public DateTime DateEmprunt { get; set; }
         public DateTime DateRetour { get; set; }
 
+        // Foreign keys vers la table livre et la table membre 
+        public int Id_Livre { get; set; }
+        public int Id_Membre { get; set; }
     }
 }
