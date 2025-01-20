@@ -1,6 +1,87 @@
-@LibrIO_HostAddress = http://localhost:5108
+@LibrIO_HostAddress = https://localhost:7226
 
-GET {{LibrIO_HostAddress}}/weatherforecast/
-Accept: application/json
+// ------ R E Q U E T E S : MEMBRE ------ //
+
+// GET - Récupérer tous les membres
+GET https://localhost:7226/membres
+
+###
+
+// POST - Ajouter un nouveau membre
+POST https://localhost:7226/membres
+Content-Type: application/json
+
+{
+  "Nom": "Le Renard",
+  "Prenom": "Chipeur",
+  "Mail": "chipeur@gmail.com"
+}
+
+###
+
+// GET - Récupérer un membre par son ID
+GET https://localhost:7226/membres/1
+
+###
+
+// PUT - Mettre à jour un membre existant
+PUT https://localhost:7226/membres/1
+Content-Type: application/json
+
+{
+  "Nom": "Munchakoopas",
+  "Prenom": "Yoshisaur",
+  "Mail": "yoshi@gmail.com"
+}
+
+###
+
+// DELETE - Supprimer un membre par son ID
+DELETE https://localhost:7226/membres/1
+
+###
+
+
+
+// ------ R E Q U E T E S : EMPLOYÉ ------ //
+
+// GET - Récupérer tous les employés
+GET https://localhost:7226/employes
+
+###
+
+// POST - Ajouter un nouvel employé
+POST https://localhost:7226/employes
+Content-Type: application/json
+
+{
+  "Nom": "Michael James",
+  "Prenom": "Riggerson",
+  "Mail": "rigby@gmail.com",
+  "Role": "Zzz"
+}
+
+###
+
+// GET - Récupérer un employé par son ID
+GET https://localhost:7226/employes/1
+
+###
+
+// PUT - Mettre à jour un employé existant
+PUT https://localhost:7226/employes/1
+Content-Type: application/json
+
+{
+  "Nom": "Michael Peterson",
+  "Prenom": "Mordecai",
+  "Mail": "mordecai@gmail.com",
+  "Role": "Aaa"
+}
+
+###
+
+// DELETE - Supprimer un employé par son ID
+DELETE https://localhost:7226/employes/1
 
 ###
