@@ -7,5 +7,7 @@ namespace LibrIO.Controllers
     [ApiController]
     public class EmpruntController : ControllerBase
     {
+
+        
     }
 }

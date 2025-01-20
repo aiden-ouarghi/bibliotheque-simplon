@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using LibrIO;
 using LibrIO.Classes;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
@@ -9,7 +10,7 @@ public class LibrIODb : DbContext
     public LibrIODb(DbContextOptions<LibrIODb> options)
     : base(options) { }
 
-    public DbSet<Emprunt> Auteurs => Set<Emprunt>();
+    public DbSet<Emprunt> Emprunts => Set<Emprunt>();
     public DbSet<Membre> Membres => Set<Membre>();
     public DbSet<Livre> Livres => Set<Livre>();
 
