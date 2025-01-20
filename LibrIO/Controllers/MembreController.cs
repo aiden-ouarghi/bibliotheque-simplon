@@ -1,5 +1,6 @@
 ﻿using LibrIO.Classes;
 using LibrIO.Classes_DTO;
+using LibrIO.Data;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -9,6 +10,14 @@ namespace LibrIO.Controllers
     [ApiController]
     public class MembreController : ControllerBase
     {
+        private readonly LibrIODb _dbLivre;
+
+        // Éviter la valeur Null 
+        public MembreController(LibrIODb librioDB)
+        {
+            _dbLivre = librioDB;
+        }
+
         // Créer un membre
         [HttpPost]
         public IActionResult PostMembre(MembreDTO membreDTO)
