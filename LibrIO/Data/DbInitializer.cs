@@ -89,7 +89,7 @@ public static class DbInitializer
             var empruntsJson = File.ReadAllText(empruntsFilePath);
             var emprunts = JsonSerializer.Deserialize<List<EmpruntsJson>>(empruntsJson);
 
-            // Pour tous les membres déclarés dans membresJson, on crée un objet Membre
+            // Pour tous les emprunts déclarés dans membresJson, on crée un objet Membre
             foreach (var empruntJson in emprunts)
             {
                 var emprunt = new Emprunt
