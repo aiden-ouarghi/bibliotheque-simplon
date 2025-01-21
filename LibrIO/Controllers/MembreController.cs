@@ -43,7 +43,7 @@ namespace LibrIO.Controllers
         [HttpGet]
         public IActionResult GetAllMembres()
         {
-            // Selectionne tout les membre 
+            // Selectionne tous les membres
             var allMembre = _dbLivre.Membre.ToList();
 
             if (allMembre == null)
@@ -61,13 +61,13 @@ namespace LibrIO.Controllers
         // Trouve un membre ou plusieurs selon la recherche
         public IActionResult GetMembre([FromQuery] Membre Recherche)
         {
-            // AsQueryable sert à définir precisément les données sorties de la Base de Données 
+            // AsQueryable sert à définir precisément les données sortient de la Base de Données 
             // Elle permet de faire une recherche comme on le souhaite 
             var Membre = _dbLivre.Membre.AsQueryable();
 
             if (!string.IsNullOrEmpty(Recherche.Prenom))
             {
-                // Trim Supprime les espaces, ToLower la met en minuscule Et Contains verifie si Identification contient la valeur demandée
+                // Trim Supprime les espaces, ToLower la met en minuscule et Contains verifie si Identification contient la valeur demandée
                 // Même procédé pour la saisie 
                 Membre = Membre.Where(membrePrenom => membrePrenom.Prenom.Trim().ToLower().Contains(Recherche.Prenom.Trim().ToLower()));
             }
@@ -80,7 +80,7 @@ namespace LibrIO.Controllers
                 Membre = Membre.Where(membreMail => membreMail.Mail.Trim().ToLower().Contains(Recherche.Mail.Trim().ToLower()));
             }
 
-            // La condition si Id est supérieur à 0 
+            // La condition si l'ID est supérieur à 0 
             if (Recherche.Id > 0)
             {
                 // Cherche dans Membre 
@@ -90,7 +90,7 @@ namespace LibrIO.Controllers
             // Fait la requête  
             var MembreEntite = Membre.ToList();
 
-            // si rien n'est trouvé
+            // Si rien n'est trouvé
             if (!MembreEntite.Any())
             {
             // Message d'erreur
@@ -131,6 +131,7 @@ namespace LibrIO.Controllers
         {
             // Cherche L'ID demandé
             var membre = _dbLivre.Membre.Find(id);
+
             // Si l'ID demandée n'est pas trouvé
             if (membre == null)
             {
@@ -144,6 +145,7 @@ namespace LibrIO.Controllers
 
             // La sauvegarde 
             _dbLivre.SaveChanges();
+
             // Affichage
             return Ok(membre);
         }

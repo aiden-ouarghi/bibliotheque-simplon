@@ -63,13 +63,13 @@ namespace LibrIO.Controllers
         // Trouve un employé ou plusieurs selon la recherche
         public IActionResult GetEmploye([FromQuery] Employe Recherche)
         {
-            // AsQueryable sert à définir précisément les données sorties de la Base de Données 
+            // AsQueryable sert à définir précisément les données sortient de la Base de Données 
             // Elle permet de faire une recherche comme on le souhaite 
             var employe = _dbLivre.Employe.AsQueryable();
 
             if (!string.IsNullOrEmpty(Recherche.Prenom))
             {
-                // Trim Supprime les espaces, ToLower la met en minuscule Et Contains vérifie si Identification contient la valeur demandée
+                // Trim Supprime les espaces, ToLower la met en minuscule et Contains vérifie si Identification contient la valeur demandée
                 employe = employe.Where(employePrenom => employePrenom.Prenom.Trim().ToLower().Contains(Recherche.Prenom.Trim().ToLower()));
             }
             if (!string.IsNullOrEmpty(Recherche.Nom))
@@ -81,7 +81,7 @@ namespace LibrIO.Controllers
                 employe = employe.Where(employeMail => employeMail.Mail.Trim().ToLower().Contains(Recherche.Mail.Trim().ToLower()));
             }
 
-            // La condition si Id est supérieur à 0 
+            // La condition si l'ID est supérieur à 0 
             if (Recherche.Id > 0)
             {
                 // Cherche dans Employe
