@@ -15,10 +15,12 @@ namespace LibrIO.Classes
         public int? AuteurId { get; set; }
         public int? CategorieId { get; set; }
         public int? GenreId { get; set; }
-        public int? CatalogueId { get; set; }
+
         // Nav 
         public Auteur Auteur { get; set; }
         public Categorie? Categorie { get; set; }
         public Genre? Genre { get; set; }
+        public ICollection<Emprunt>? Emprunt { get; set; }
+
     }
 }

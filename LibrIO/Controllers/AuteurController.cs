@@ -21,10 +21,10 @@ namespace LibrIO.Controllers
         [HttpPost]
         // commentaire Swagger
         [SwaggerOperation(
-    Summary = "Ajoute un auteur",
-    Description = "Pour ajouter un Auteur il faut saisir un prenom ou un nom ou les deux " +
-            "Dans le cas ou le livre n'a pas d'auteur Par defaut L'id 1 seras Sans nom et sans Prenom2.",
-    OperationId = "PostAuteur")]
+            Summary = "Ajoute un auteur",
+            Description = "Pour ajouter un Auteur il faut saisir un prenom ou un nom ou les deux " +
+                    "Dans le cas ou le livre n'a pas d'auteur Par defaut L'id 1 seras Sans nom et sans Prenom2.",
+            OperationId = "PostAuteur")]
         [SwaggerResponse(200, "Auteur ajouté avec succès")]
         [SwaggerResponse(400, "Demande invalide")]
         public IActionResult PostAuteur([FromQuery] AuteurDTO auteurDTO)
@@ -45,9 +45,9 @@ namespace LibrIO.Controllers
         // get all Auteur
         [HttpGet]
         [SwaggerOperation(
-    Summary = "Montre tout les Auteur",
-    Description = "Ici seras montrer tout les Auteur par odre D'id ",
-    OperationId = "GetAllAuteur")]
+            Summary = "Montre tout les Auteur",
+            Description = "Ici seras montrer tout les Auteur par odre D'id ",
+            OperationId = "GetAllAuteur")]
         [SwaggerResponse(200, "Les Auteur Sont montrer avec succés")]
         [SwaggerResponse(400, "Demande invalide")]
         public IActionResult GetAllAuteur()
@@ -60,9 +60,9 @@ namespace LibrIO.Controllers
         // le chemin a taper Obligatoire 
         [HttpGet("api/GetAuteur")]
         [SwaggerOperation(
-    Summary = "Montre les Auteur demander",
-    Description = "Ici seras montrer les Auteur avec les critère demander, Aucune obligation de remplir tout les critère",
-    OperationId = "GetAuteur")]
+            Summary = "Montre les Auteur demander",
+            Description = "Ici seras montrer les Auteur avec les critère demander, Aucune obligation de remplir tout les critère",
+            OperationId = "GetAuteur")]
         [SwaggerResponse(200, "Auteur montrer avec succès")]
         [SwaggerResponse(400, "Demande invalide")]
         public IActionResult GetAuteur([FromQuery] Auteur auteurs)
@@ -82,9 +82,9 @@ namespace LibrIO.Controllers
         // suprimer Auteur 
         [HttpDelete("{id}")]
         [SwaggerOperation(
-    Summary = "Suprime une Auteur",
-    Description = "Permet de suprimer une Auteur Par son ID ",
-    OperationId = "DeleteAuteur")]
+            Summary = "Suprime une Auteur",
+            Description = "Permet de suprimer une Auteur Par son ID ",
+            OperationId = "DeleteAuteur")]
         [SwaggerResponse(200, "Categorie suprimer avec succès")]
         [SwaggerResponse(400, "Demande invalide")]
         public IActionResult DeleteAuteur(int id)
@@ -107,9 +107,9 @@ namespace LibrIO.Controllers
         //Modifier un Auteur
         [HttpPut("{id}")]
         [SwaggerOperation(
-    Summary = "Modifier un Auteur",
-    Description = " En saisissant L'Id Vous pourrez modifier Le Prenom et Le Nom de l'auteur",
-    OperationId = "PutAuteur")]
+            Summary = "Modifier un Auteur",
+            Description = " En saisissant L'Id Vous pourrez modifier Le Prenom et Le Nom de l'auteur",
+            OperationId = "PutAuteur")]
         [SwaggerResponse(200, "Auteur Modifier avec succès")]
         [SwaggerResponse(400, "Demande invalide")]
         public IActionResult UpdateAuteur(int id, [FromQuery] AuteurDTO auteurDTO)
