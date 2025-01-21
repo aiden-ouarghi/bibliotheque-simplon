@@ -109,7 +109,7 @@ namespace LibrIO.Controllers
     OperationId = "PutGenre")]
         [SwaggerResponse(200, "Genre modifier avec Succes")]
         [SwaggerResponse(400, "Demande invalide")]
-        public IActionResult PutCategorie( [FromQuery]int id, [FromQuery] GenreDTO genreDTO)
+        public IActionResult UpdateCategorie( [FromQuery]int id, [FromQuery] GenreDTO genreDTO)
         {
             // Cherche L'id demander
             var genre = _dbLivre.Genre.Find(id);

@@ -23,6 +23,10 @@ namespace LibrIO.Methode
                     else if (property.PropertyType == typeof(int) && int.TryParse(value, out int intValue))
                     {
                         valeurClasse = valeurClasse.Where(e => EF.Property<int>(e, property.Name) == intValue);
+
+                    }else if (property.PropertyType == typeof(DateTime) && DateTime.TryParse(value, out DateTime DataValue))
+                    {
+                        valeurClasse = valeurClasse.Where(e => EF.Property<DateTime>(e, property.Name) == DataValue);
                     }
                 }
             }

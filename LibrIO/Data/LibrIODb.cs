@@ -10,7 +10,8 @@ namespace LibrIO.Data
         public DbSet<Genre> Genre { get; set; }
         public DbSet<Auteur> Auteur { get; set; }
         public DbSet<Categorie> Categorie { get; set; }
-        public DbSet<Catalogue> Catalogue { get; set; }
+        public DbSet<Membre> Membre { get; set; }
+        public DbSet<Employe> Employe { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             //Relation Livre Auteur 
@@ -29,11 +30,6 @@ namespace LibrIO.Data
              .HasOne(livre => livre.Genre)
              .WithMany(genre => genre.Livres)
              .HasForeignKey(livre => livre.GenreId);
-            // relation catalogue livre
-            modelBuilder.Entity<Livre>()
-             .HasOne(livre => livre.Catalogues)  
-                .WithOne(catalogue => catalogue.Livre)     
-                .HasForeignKey<Catalogue>(catalogue => catalogue.livreId); 
             
         }
     }
