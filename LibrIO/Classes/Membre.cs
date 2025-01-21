@@ -1,4 +1,6 @@
-﻿namespace LibrIO.Classes
+﻿using System.Text.Json.Serialization;
+
+namespace LibrIO.Classes
 {
     public class Membre
     {
@@ -7,7 +9,9 @@
         public string Prenom { get; set; }
         public string Mail { get; set; }
 
-        public ICollection<Emprunt> Emprunts { get; set; }
+
+        [JsonIgnore] // Empêche la sérialisation de cette propriété
+        public ICollection<Emprunt> Emprunt { get; set; }
 
     }
 }

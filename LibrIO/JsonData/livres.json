@@ -5,7 +5,8 @@
         "Edition": "Hachette",
         "AuteurId": 1,
         "GenreId": 2,
-        "CategorieId": 1
+        "CategorieId": 1,
+        "Disponibilite": true
     },
     {
         "Titre": "1984",
@@ -13,7 +14,8 @@
         "Edition": "Secker & Warburg",
         "AuteurId": 2,
         "GenreId": 1,
-        "CategorieId": 2
+        "CategorieId": 2,
+        "Disponibilite": true
     },
     {
         "Titre": "Le Petit Prince",
@@ -21,7 +23,8 @@
         "Edition": "Gallimard",
         "AuteurId": 3,
         "GenreId": 3,
-        "CategorieId": 3
+        "CategorieId": 3,
+        "Disponibilite": true
     },
     {
         "Titre": "Les Misérables",
@@ -29,7 +32,8 @@
         "Edition": "Gallimard",
         "AuteurId": 4,
         "GenreId": 4,
-        "CategorieId": 4
+        "CategorieId": 4,
+        "Disponibilite": true
     },
     {
         "Titre": "Pride and Prejudice",
@@ -37,7 +41,8 @@
         "Edition": "Penguin Classics",
         "AuteurId": 5,
         "GenreId": 5,
-        "CategorieId": 5
+        "CategorieId": 5,
+        "Disponibilite": true
     },
     {
         "Titre": "The Great Gatsby",
@@ -45,7 +50,8 @@
         "Edition": "Scribner",
         "AuteurId": 6,
         "GenreId": 1,
-        "CategorieId": 6
+        "CategorieId": 6,
+        "Disponibilite": true
     },
     {
         "Titre": "War and Peace",
@@ -53,7 +59,8 @@
         "Edition": "Penguin Classics",
         "AuteurId": 7,
         "GenreId": 4,
-        "CategorieId": 7
+        "CategorieId": 7,
+        "Disponibilite": true
     },
     {
         "Titre": "To Kill a Mockingbird",
@@ -61,7 +68,8 @@
         "Edition": "Harper Perennial Modern Classics",
         "AuteurId": 8,
         "GenreId": 6,
-        "CategorieId": 8
+        "CategorieId": 8,
+        "Disponibilite": true
     },
     {
         "Titre": "The Catcher in the Rye",
@@ -69,7 +77,8 @@
         "Edition": "Little, Brown and Company",
         "AuteurId": 9,
         "GenreId": 7,
-        "CategorieId": 9
+        "CategorieId": 9,
+        "Disponibilite": true
     },
     {
         "Titre": "Moby-Dick",
@@ -77,6 +86,7 @@
         "Edition": "Penguin Classics",
         "AuteurId": 10,
         "GenreId": 8,
-        "CategorieId": 10
+        "CategorieId": 10,
+        "Disponibilite": true
     }
 ]

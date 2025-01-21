@@ -40,7 +40,6 @@ namespace LibrIO.Data
              .HasForeignKey(livre => livre.GenreId);           
 
             // Configuration de Emprunt
-
             modelBuilder.Entity<Emprunt>()
                 .Property(e => e.Id);
 
@@ -51,7 +50,7 @@ namespace LibrIO.Data
 
             modelBuilder.Entity<Emprunt>()
                 .HasOne(e => e.Membre)
-                .WithMany(m => m.Emprunts)
+                .WithMany(m => m.Emprunt)
                 .HasForeignKey(e => e.Id_Membre);
 
         }

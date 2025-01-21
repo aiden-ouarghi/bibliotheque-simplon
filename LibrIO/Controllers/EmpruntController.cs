@@ -5,6 +5,9 @@ using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
 using LibrIO.Data;
 using LibrIO.Methode;
+using System.Text;
+using System.Xml;
+using static LibrIO.Classes_DTO.EmpruntDTOupdate;
 
 namespace LibrIO.Controllers
 {
@@ -30,6 +33,7 @@ namespace LibrIO.Controllers
 
         public IActionResult PostEmprunt([FromQuery] EmpruntDTO EmpruntDTO)
         {
+
             var emprunt = new Emprunt()
             {
                 Id_Livre = EmpruntDTO.Id_Livre,
@@ -39,6 +43,13 @@ namespace LibrIO.Controllers
             };
 
             LibrIODb.Emprunt.Add(emprunt);
+
+            // Récupérer le livre correspondant au Id_Livre
+            var livre = LibrIODb.Livre.SingleOrDefault(e => e.Id == emprunt.Id_Livre);
+
+            // Passer le livre en emprunté 
+            livre.Disponibilite = false;
+
             LibrIODb.SaveChanges();
             return Ok(emprunt);
         }
@@ -57,22 +68,55 @@ namespace LibrIO.Controllers
             return Ok(LibrIODb.Emprunt.ToList());
         }
 
-        // Récupérer un emprunt by différents critères 
-        // dont la dateEmprunt, par exemple pour envoyer un rappel 
-        [HttpGet("api/GetEmprunt")]
+        // Récupérer tous les emprunts d'un membre
+        [HttpGet("api/GetEmpruntsbyMembre")]
         [SwaggerOperation(
-            Summary = "Récupèrer les emprunts selon une saisie",
-            Description = "Récupère tous les emprunts selon la saisie utilisateur",
-            OperationId = "GetEmprunt")]
-        [SwaggerResponse(200, "Retrouvez tous les emprunts correspondant à vos critères")]
-        [SwaggerResponse(400, "Rêquête invalide")]
-        public IActionResult GetEmprunt([FromQuery] Emprunt emprunts)
+          Summary = "Récupèrer tous les emprunts d'un membre par son id",
+          Description = "Récupère tous les emprunts d'un membre par son id",
+          OperationId = "GetEmpruntsbyMembre")]
+        [SwaggerResponse(200, "Retrouvez tous les emprunts du membre sélectionné", typeof(Emprunt))]
+        [SwaggerResponse(400, "Requête invalide")]
+        public IActionResult GetEmpruntsbyMembre([FromQuery] int id)
         {
-            var emprunt = LibrIODb.Emprunt.AsQueryable();
-            emprunt = FiltreRecherche.AppliquerFiltres(emprunt, emprunts);
+            var emprunts = LibrIODb.Emprunt;
+            var empruntsFiltered = emprunts.Where(e => e.Id_Membre == id);
 
-            return Ok(emprunt);
+            return Ok(empruntsFiltered);
         }
+
+        // Récupérer tous les emprunts d'un membre
+        [HttpGet("api/GetEmpruntsbyRetour")]
+        [SwaggerOperation(
+          Summary = "Récupèrer tous les emprunts par date de retour",
+          Description = "Récupère tous les emprunts par date de retour",
+          OperationId = "GetEmpruntsbyRetour")]
+        [SwaggerResponse(200, "Retrouvez tous les emprunts à la date de retour choisie", typeof(Emprunt))]
+        [SwaggerResponse(400, "Requête invalide")]
+        public IActionResult GetEmpruntsbyRetour([FromQuery] DateTime date)
+        {
+            //var dateParsed = DateTime.Parse(date);
+            var emprunts = LibrIODb.Emprunt;
+            var empruntsFiltered = emprunts.Where(e => e.DateRetour == date);
+
+            return Ok(empruntsFiltered);
+        }
+
+        //// Récupérer un emprunt by différents critères 
+        //// dont la dateEmprunt, par exemple pour envoyer un rappel 
+        //[HttpGet("api/GetEmprunt")]
+        //[SwaggerOperation(
+        //    Summary = "Récupèrer les emprunts selon une saisie",
+        //    Description = "Récupère tous les emprunts selon la saisie utilisateur",
+        //    OperationId = "GetEmprunt")]
+        //[SwaggerResponse(200, "Retrouvez tous les emprunts correspondant à vos critères")]
+        //[SwaggerResponse(400, "Rêquête invalide")]
+        //public IActionResult GetEmprunt([FromQuery] EmpruntDTOrecherche empruntDTOrecherche)
+        //{
+        //    var emprunt = LibrIODb.Emprunt.AsQueryable();
+        //    emprunt = FiltreRecherche.AppliquerFiltres(EmpruntDTOrecherche, emprunt);
+
+        //    return Ok(emprunt);
+        //}
 
         // Modifier un emprunt 
         [HttpPut("api/UpdateEmprunt")]
@@ -118,6 +162,12 @@ namespace LibrIO.Controllers
             {
                 return NotFound("Pas d'emprunt trouvé !");
             }
+
+            // Récupérer le livre correspondant au Id_Livre
+            var livre = LibrIODb.Livre.SingleOrDefault(e => e.Id == emprunt.Id_Livre);
+
+            // Passer le livre en à nouveau disponible  
+            livre.Disponibilite = true;
 
             LibrIODb.Remove(emprunt);
             LibrIODb.SaveChanges();

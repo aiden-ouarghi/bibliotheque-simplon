@@ -16,6 +16,7 @@ public static class DbInitializer
         public int AuteurId { get; set; }
         public int GenreId { get; set; }
         public int CategorieId { get; set; }
+        public bool Disponibilite { get; set; }
     }
 
     public class CategoriesJson
@@ -116,7 +117,8 @@ public static class DbInitializer
                         Edition = livreJson.Edition,
                         AuteurId = livreJson.AuteurId,
                         GenreId = livreJson.GenreId,
-                        CategorieId = livreJson.CategorieId
+                        CategorieId = livreJson.CategorieId,
+                        Disponibilite = livreJson.Disponibilite 
                     };
                     context.Livre.Add(livre);
                 }
