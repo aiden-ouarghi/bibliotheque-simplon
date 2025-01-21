@@ -1,72 +1,82 @@
 [
     {
-        "Auteur": "Victor Hugo",
-        "Titre": "Les Misérables",
-        "ISBN": "9781234567890",
-        "Edition": "Gallimard",
-        "StatutEmprunt": true
-    },
-    {
-        "Auteur": "Jules Verne",
-        "Titre": "Vingt mille lieues sous les mers",
-        "ISBN": "9780987654321",
+        "Titre": "Le Voyage au Centre de la Terre",
+        "ISBN": "978-3-16-148410-0",
         "Edition": "Hachette",
-        "StatutEmprunt": true
+        "AuteurId": 1,
+        "GenreId": 2,
+        "CategorieId": 1
     },
     {
-        "Auteur": "George Orwell",
         "Titre": "1984",
-        "ISBN": "9780451524935",
+        "ISBN": "978-0-452-28423-4",
         "Edition": "Secker & Warburg",
-        "StatutEmprunt": true
+        "AuteurId": 2,
+        "GenreId": 1,
+        "CategorieId": 2
     },
     {
-        "Auteur": "Jane Austen",
-        "Titre": "Orgueil et Préjugés",
-        "ISBN": "9780141439518",
-        "Edition": "Penguin Classics",
-        "StatutEmprunt": false
-    },
-    {
-        "Auteur": "Albert Camus",
-        "Titre": "L'Étranger",
-        "ISBN": "9782070360024",
-        "Edition": "Gallimard",
-        "StatutEmprunt": false
-    },
-    {
-        "Auteur": "Fedor Dostoïevski",
-        "Titre": "Crime et Châtiment",
-        "ISBN": "9780143058144",
-        "Edition": "Penguin Books",
-        "StatutEmprunt": false
-    },
-    {
-        "Auteur": "Gabriel García Márquez",
-        "Titre": "Cent ans de solitude",
-        "ISBN": "9780060883287",
-        "Edition": "Harper & Row",
-        "StatutEmprunt": false
-    },
-    {
-        "Auteur": "Antoine de Saint-Exupéry",
         "Titre": "Le Petit Prince",
-        "ISBN": "9780156013987",
-        "Edition": "Reynal & Hitchcock",
-        "StatutEmprunt": false
+        "ISBN": "978-0-15-601219-5",
+        "Edition": "Gallimard",
+        "AuteurId": 3,
+        "GenreId": 3,
+        "CategorieId": 3
     },
     {
-        "Auteur": "Mary Shelley",
-        "Titre": "Frankenstein",
-        "ISBN": "9780486282114",
-        "Edition": "Dover Publications",
-        "StatutEmprunt": false
+        "Titre": "Les Misérables",
+        "ISBN": "978-2-07-041236-4",
+        "Edition": "Gallimard",
+        "AuteurId": 4,
+        "GenreId": 4,
+        "CategorieId": 4
     },
     {
-        "Auteur": "Homer",
-        "Titre": "L'Odyssée",
-        "ISBN": "9780140268867",
+        "Titre": "Pride and Prejudice",
+        "ISBN": "978-1-85326-000-1",
         "Edition": "Penguin Classics",
-        "StatutEmprunt": false
+        "AuteurId": 5,
+        "GenreId": 5,
+        "CategorieId": 5
+    },
+    {
+        "Titre": "The Great Gatsby",
+        "ISBN": "978-0-7432-7356-5",
+        "Edition": "Scribner",
+        "AuteurId": 6,
+        "GenreId": 1,
+        "CategorieId": 6
+    },
+    {
+        "Titre": "War and Peace",
+        "ISBN": "978-0-14-303999-0",
+        "Edition": "Penguin Classics",
+        "AuteurId": 7,
+        "GenreId": 4,
+        "CategorieId": 7
+    },
+    {
+        "Titre": "To Kill a Mockingbird",
+        "ISBN": "978-0-06-112008-4",
+        "Edition": "Harper Perennial Modern Classics",
+        "AuteurId": 8,
+        "GenreId": 6,
+        "CategorieId": 8
+    },
+    {
+        "Titre": "The Catcher in the Rye",
+        "ISBN": "978-0-316-76948-0",
+        "Edition": "Little, Brown and Company",
+        "AuteurId": 9,
+        "GenreId": 7,
+        "CategorieId": 9
+    },
+    {
+        "Titre": "Moby-Dick",
+        "ISBN": "978-0-14-243724-7",
+        "Edition": "Penguin Classics",
+        "AuteurId": 10,
+        "GenreId": 8,
+        "CategorieId": 10
     }
 ]

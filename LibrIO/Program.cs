@@ -6,6 +6,7 @@ using System;
 using System.Text.Json;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.Annotations;
+using LibrIO.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<LibrIODb>(opt => opt.UseSqlite("Data Source=LibriIO.db"));
@@ -13,37 +14,36 @@ builder.Services.AddControllers();
 builder.Services.AddOpenApi();
 builder.Services.AddEndpointsApiExplorer();
 
-// Swagger
+// Ajouter DbContext et configuration de la base de données SQLite
+builder.Services.AddDbContext<LibrIODb>(options =>
+    options.UseSqlite("Data Source=LibrIO.db"));
+
+// Ajouter les services nécessaires, comme les contrôleurs et Swagger
+builder.Services.AddControllers();
 builder.Services.AddSwaggerGen(c =>
 {
-    c.SwaggerDoc("V1", new OpenApiInfo
+    c.SwaggerDoc("v1", new OpenApiInfo
     {
-        Title = "LibrIO",
-        Version = "V1",
-        Description = "Une solution de gestion de catalogue pour les bibliothèquess",
-        Contact = new OpenApiContact
-        {
-            Name = "Julie",
-            Email = "dbt.julie@gmail.com",
-            Url = new Uri("https://votre-site.com")
-        }
+        Title = "LibrIO API",
+        Version = "v1",
+        Description = "Une API pour une bibliothèque"
     });
-
     c.EnableAnnotations();
 });
 
-var app = builder.Build();
+var app = builder.Build(); // Construire l'application après avoir ajouté les services
 
+// Vérifiez si l'environnement est en développement pour activer Swagger
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI(c =>
     {
-        c.SwaggerEndpoint("/swagger/V1/swagger.json", "LibrIO");
-        c.RoutePrefix = ""; 
+        c.SwaggerEndpoint("/swagger/v1/swagger.json", "LibrIO API V1");
+        c.RoutePrefix = string.Empty;
     });
-    app.MapOpenApi();
 }
+
 
 // Initialiser la base de données avec un json (méthode seed)
 using (var scope = app.Services.CreateScope())
@@ -54,10 +54,8 @@ using (var scope = app.Services.CreateScope())
     }
 }
 
-app.UseHttpsRedirection();
-
-app.UseAuthorization();
-
 app.MapControllers();
 
+// Démarrer l'application
 app.Run();
+

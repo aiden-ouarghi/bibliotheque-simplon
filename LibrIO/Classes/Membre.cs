@@ -7,5 +7,7 @@
         public string Prenom { get; set; }
         public string Mail { get; set; }
 
+        public ICollection<Emprunt> Emprunts { get; set; }
+
     }
 }
