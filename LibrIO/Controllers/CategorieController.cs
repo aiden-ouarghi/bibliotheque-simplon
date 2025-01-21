@@ -20,11 +20,10 @@ namespace LibrIO.Controllers
         }
         // Créer une categorie 
         [HttpPost("api/PostCategorie")]
-        // commentaire Swagger
         [SwaggerOperation(
-    Summary = "Ajoute une Categorie",
-    Description = "La Categorie sert a dire si c'est un Roman/Manga/Novel ect ",
-    OperationId = "PostCategorie")]
+            Summary = "Ajoute une Categorie",
+            Description = "La Categorie sert a dire si c'est un Roman/Manga/Novel ect ",
+            OperationId = "PostCategorie")]
         [SwaggerResponse(200, "Categorie ajouté avec succès")]
         [SwaggerResponse(400, "Demande invalide")]
         public IActionResult PostCategorie([FromQuery] CategorieDTO categorieDTO)

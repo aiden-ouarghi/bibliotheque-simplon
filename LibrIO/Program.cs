@@ -1,9 +1,18 @@
-using LibrIO.Classes;
-using LibrIO.Data;
 using Microsoft.EntityFrameworkCore;
+using LibrIO;
+using Microsoft.AspNetCore.Components.Forms;
+using System.Formats.Tar;
+using System;
+using System.Text.Json;
 using Microsoft.OpenApi.Models;
+using Swashbuckle.AspNetCore.Annotations;
+using LibrIO.Data;
 
 var builder = WebApplication.CreateBuilder(args);
+builder.Services.AddDbContext<LibrIODb>(opt => opt.UseSqlite("Data Source=LibriIO.db"));
+builder.Services.AddControllers();
+builder.Services.AddOpenApi();
+builder.Services.AddEndpointsApiExplorer();
 
 // Ajouter DbContext et configuration de la base de données SQLite
 builder.Services.AddDbContext<LibrIODb>(options =>
@@ -35,7 +44,16 @@ if (app.Environment.IsDevelopment())
     });
 }
 
-// Mapper les contrôleurs
+
+// Initialiser la base de données avec un json (méthode seed)
+using (var scope = app.Services.CreateScope())
+{
+    {
+        var dbContext = scope.ServiceProvider.GetRequiredService<LibrIODb>();
+        DbInitializer.Seed(dbContext);
+    }
+}
+
 app.MapControllers();
 
 // Démarrer l'application

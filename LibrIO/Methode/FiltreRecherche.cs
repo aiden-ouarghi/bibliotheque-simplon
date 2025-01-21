@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System.Collections.Generic;
+using Microsoft.EntityFrameworkCore;
 
 namespace LibrIO.Methode
 {
@@ -17,12 +18,15 @@ namespace LibrIO.Methode
                 {
                     if (property.PropertyType == typeof(string))
                     {
-
                         valeurClasse = valeurClasse.Where(instanceDelivre => EF.Property<string>(instanceDelivre, property.Name).StartsWith(value.Trim()));
                     }
                     else if (property.PropertyType == typeof(int) && int.TryParse(value, out int intValue))
                     {
                         valeurClasse = valeurClasse.Where(e => EF.Property<int>(e, property.Name) == intValue);
+                    }
+                    else if (property.PropertyType == typeof(DateTime) && DateTime.TryParse(value, out DateTime datevalue))
+                    {
+                        valeurClasse = valeurClasse = valeurClasse.Where(e => EF.Property<DateTime>(e, property.Name) == datevalue);
                     }
                 }
             }
