@@ -4,9 +4,9 @@
     { "Nom": "Science-Fiction" },
     { "Nom": "Fantasy" },
     { "Nom": "Mystery" },
-    { "Nom": "Historical" },
     { "Nom": "Horror" },
     { "Nom": "Adventure" },
     { "Nom": "Non-Fiction" },
-    { "Nom": "Young Adult" }
+    { "Nom": "Young Adult" },
+    { "Nom": "Fiction" }
 ]
