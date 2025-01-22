@@ -1,23 +1,57 @@
-var builder = WebApplication.CreateBuilder(args);
+using Microsoft.EntityFrameworkCore;
+using LibrIO;
+using Microsoft.AspNetCore.Components.Forms;
+using System.Formats.Tar;
+using System;
+using System.Text.Json;
+using Microsoft.OpenApi.Models;
+using Swashbuckle.AspNetCore.Annotations;
+using LibrIO.Data;
 
-// Add services to the container.
+var builder = WebApplication.CreateBuilder(args);
+builder.Services.AddDbContext<LibrIODb>(opt => opt.UseSqlite("Data Source=LibriIO.db"));
+builder.Services.AddControllers();
+builder.Services.AddOpenApi();
+builder.Services.AddEndpointsApiExplorer();
+
+builder.Services.AddDbContext<LibrIODb>(options =>
+    options.UseSqlite("Data Source=LibrIO.db"));
 
 builder.Services.AddControllers();
-// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
-builder.Services.AddOpenApi();
+builder.Services.AddSwaggerGen(c =>
+{
+    c.SwaggerDoc("v1", new OpenApiInfo
+    {
+        Title = "LibrIO API",
+        Version = "v1",
+        Description = "Une API pour une bibliothèque"
+    });
+    c.EnableAnnotations();
+});
+var app = builder.Build(); 
 
-var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-    app.MapOpenApi();
+    app.UseSwagger();
+    app.UseSwaggerUI(c =>
+    {
+        c.SwaggerEndpoint("/swagger/v1/swagger.json", "LibrIO API V1");
+        c.RoutePrefix = string.Empty;
+    });
 }
 
-app.UseHttpsRedirection();
 
-app.UseAuthorization();
+// Initialiser la base de données avec un json (méthode seed)
+using (var scope = app.Services.CreateScope())
+{
+    {
+        var dbContext = scope.ServiceProvider.GetRequiredService<LibrIODb>();
+        DbInitializer.Seed(dbContext);
+    }
+}
 
 app.MapControllers();
 
 app.Run();
+

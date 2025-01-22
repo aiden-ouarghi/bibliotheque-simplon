@@ -1,0 +1,82 @@
+[
+    {
+        "Titre": "Le Voyage au Centre de la Terre",
+        "ISBN": "978-3-16-148410-0",
+        "Edition": "Hachette",
+        "AuteurId": 1,
+        "GenreId": 2,
+        "CategorieId": 1
+    },
+    {
+        "Titre": "1984",
+        "ISBN": "978-0-452-28423-4",
+        "Edition": "Secker & Warburg",
+        "AuteurId": 2,
+        "GenreId": 1,
+        "CategorieId": 2
+    },
+    {
+        "Titre": "Le Petit Prince",
+        "ISBN": "978-0-15-601219-5",
+        "Edition": "Gallimard",
+        "AuteurId": 3,
+        "GenreId": 3,
+        "CategorieId": 3
+    },
+    {
+        "Titre": "Les Misérables",
+        "ISBN": "978-2-07-041236-4",
+        "Edition": "Gallimard",
+        "AuteurId": 4,
+        "GenreId": 4,
+        "CategorieId": 4
+    },
+    {
+        "Titre": "Pride and Prejudice",
+        "ISBN": "978-1-85326-000-1",
+        "Edition": "Penguin Classics",
+        "AuteurId": 5,
+        "GenreId": 5,
+        "CategorieId": 5
+    },
+    {
+        "Titre": "The Great Gatsby",
+        "ISBN": "978-0-7432-7356-5",
+        "Edition": "Scribner",
+        "AuteurId": 6,
+        "GenreId": 1,
+        "CategorieId": 6
+    },
+    {
+        "Titre": "War and Peace",
+        "ISBN": "978-0-14-303999-0",
+        "Edition": "Penguin Classics",
+        "AuteurId": 7,
+        "GenreId": 4,
+        "CategorieId": 7
+    },
+    {
+        "Titre": "To Kill a Mockingbird",
+        "ISBN": "978-0-06-112008-4",
+        "Edition": "Harper Perennial Modern Classics",
+        "AuteurId": 8,
+        "GenreId": 6,
+        "CategorieId": 8
+    },
+    {
+        "Titre": "The Catcher in the Rye",
+        "ISBN": "978-0-316-76948-0",
+        "Edition": "Little, Brown and Company",
+        "AuteurId": 9,
+        "GenreId": 7,
+        "CategorieId": 9
+    },
+    {
+        "Titre": "Moby-Dick",
+        "ISBN": "978-0-14-243724-7",
+        "Edition": "Penguin Classics",
+        "AuteurId": 10,
+        "GenreId": 8,
+        "CategorieId": 10
+    }
+]
