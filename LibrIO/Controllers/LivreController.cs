@@ -36,6 +36,7 @@ namespace LibrIO.Controllers
                 AuteurId = livreDTO.AuteurId,
                 CategorieId = livreDTO.CategorieId,
                 GenreId = livreDTO.GenreId,
+                Disponibilite = true
             };
 
             // affiche 
@@ -58,6 +59,24 @@ namespace LibrIO.Controllers
         }
 
         [HttpGet("api/GetLivre")]
+        // Récupérer tous les livres disponibless
+        [HttpGet("GetAllLivresDispo")]
+        [SwaggerOperation(
+          Summary = "Récupèrer tous les livres disponibles",
+          Description = "Récupère tous les livres disponibles",
+          OperationId = "GetAllLivresDispo")]
+        [SwaggerResponse(200, "Retrouvez tous les emprunts en cours", typeof(Emprunt))]
+        [SwaggerResponse(400, "Requête invalide")]
+        public IActionResult GetAllLivresDispo(LibrIODb librIODb)
+        {
+            var livres = _dbLivre.Livre;
+            var livresFiltered = livres.Where(e => e.Disponibilite == true);
+
+            return Ok(livresFiltered);
+        }
+
+
+        [HttpGet("api/GetCategorie")]
         [SwaggerOperation(
             Summary = "Montre les Livre demander",
             Description = "Ici seras montrer les Livre avec les critère demander",

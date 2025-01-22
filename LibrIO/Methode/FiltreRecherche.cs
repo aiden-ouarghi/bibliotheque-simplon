@@ -24,12 +24,10 @@ namespace LibrIO.Methode
                     {
                         valeurClasse = valeurClasse.Where(e => EF.Property<int>(e, property.Name) == intValue);
 
-                    } else
+                    }
+                    else if (property.PropertyType == typeof(DateTime) && DateTime.TryParse(value, out DateTime dateValue))
                     {
-                        if(properties.ToList().Count == 0)
-                        {
-                           
-                        }
+                        valeurClasse = valeurClasse.Where(e => EF.Property<DateTime>(e, property.Name).Date == dateValue.Date);
                     }
                 }
             }

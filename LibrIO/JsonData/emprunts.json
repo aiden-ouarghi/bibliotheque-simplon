@@ -3,18 +3,21 @@
         "DateEmprunt": "2025-01-01T10:00:00",
         "DateRetour": "2025-01-15T10:00:00",
         "Id_Livre": 1,
-        "Id_Membre": 1
+        "Id_Membre": 1,
+        "Encours": false
     },
     {
         "DateEmprunt": "2025-01-02T10:00:00",
         "DateRetour": "2025-01-16T10:00:00",
         "Id_Livre": 2,
-        "Id_Membre": 2
+        "Id_Membre": 2,
+        "Encours": true
     },
     {
         "DateEmprunt": "2025-01-03T10:00:00",
         "DateRetour": "2025-01-17T10:00:00",
         "Id_Livre": 3,
-        "Id_Membre": 3
+        "Id_Membre": 3,
+        "Encours": false
     }
 ]

@@ -1,5 +1,6 @@
-﻿using LibrIO.Classes_DTO;
+using LibrIO.Classes_DTO;
 using System.Text.Json.Serialization;
+
 
 namespace LibrIO.Classes
 {
@@ -10,7 +11,7 @@ namespace LibrIO.Classes
         public string? ISBN { get; set; }
         public string? Edition { get; set; }
         public bool? StatutEmprunt { get; set; }
-        
+        public bool? Disponibilite { get; set; }
 
         // clé étrangere 
         public int? AuteurId { get; set; }
@@ -24,7 +25,7 @@ namespace LibrIO.Classes
         public Categorie? Categorie { get; set; }
         [JsonIgnore]
         public Genre? Genre { get; set; }
-        [JsonIgnore]
+        [JsonIgnore] // Empêche la sérialisation de cette propriété
         public ICollection<Emprunt>? Emprunt { get; set; }
 
     }
