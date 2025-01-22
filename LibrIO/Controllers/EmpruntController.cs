@@ -8,6 +8,7 @@ using LibrIO.Methode;
 using System.Text;
 using System.Xml;
 using static LibrIO.Classes_DTO.EmpruntDTOupdate;
+using System.Globalization;
 
 namespace LibrIO.Controllers
 {
@@ -47,25 +48,41 @@ namespace LibrIO.Controllers
             // Récupérer le livre correspondant au Id_Livre
             var livre = LibrIODb.Livre.SingleOrDefault(e => e.Id == emprunt.Id_Livre);
 
-            // Passer le livre en emprunté 
-            livre.Disponibilite = false;
+            // Vérifie que le livre existe
+            if (livre != null)
+            {
+                // Vérifie que le livre est bien disponible
+                if (livre.Disponibilite == true)
+                {
+                    // Passer le livre en à nouveau disponible  
+                    livre.Disponibilite = false;
+                    emprunt.Encours = true;
+                }
+                else
+                {
+                    // Retourne une erreur not found
+                    return NotFound("Le livre demandé n'existe pas.");
+                }
+            }
 
             LibrIODb.SaveChanges();
             return Ok(emprunt);
         }
 
-
-        // Récupérer tous les emprunts
+        // Récupérer tous les emprunts en cours
         [HttpGet("api/GetAllEmprunt")]
         [SwaggerOperation(
-          Summary = "Récupèrer tous les emprunts",
+          Summary = "Récupèrer tous les emprunts en cours",
           Description = "Récupère tous les emprunts en cours",
           OperationId = "GetAllEmprunt")]
         [SwaggerResponse(200, "Retrouvez tous les emprunts en cours", typeof(Emprunt))]
         [SwaggerResponse(400, "Requête invalide")]
         public IActionResult GetAllEmprunt(LibrIODb librIODb)
         {
-            return Ok(LibrIODb.Emprunt.ToList());
+            var emprunts = LibrIODb.Emprunt;
+            var empruntsFiltered = emprunts.Where(e => e.Encours == true);
+
+            return Ok(empruntsFiltered);
         }
 
         // Récupérer tous les emprunts d'un membre
@@ -84,19 +101,36 @@ namespace LibrIO.Controllers
             return Ok(empruntsFiltered);
         }
 
-        // Récupérer tous les emprunts d'un membre
+        // Récupérer tous les emprunts avec la date retour demandée 
         [HttpGet("api/GetEmpruntsbyRetour")]
         [SwaggerOperation(
-          Summary = "Récupèrer tous les emprunts par date de retour",
+          Summary = "Récupèrer tous les emprunts par date de retour (Format YYYY-MM-DD)",
           Description = "Récupère tous les emprunts par date de retour",
           OperationId = "GetEmpruntsbyRetour")]
         [SwaggerResponse(200, "Retrouvez tous les emprunts à la date de retour choisie", typeof(Emprunt))]
         [SwaggerResponse(400, "Requête invalide")]
-        public IActionResult GetEmpruntsbyRetour([FromQuery] DateTime date)
-        {
-            //var dateParsed = DateTime.Parse(date);
+        public IActionResult GetEmpruntsbyRetour(DateTime date)
+        { 
             var emprunts = LibrIODb.Emprunt;
-            var empruntsFiltered = emprunts.Where(e => e.DateRetour == date);
+            // .Date force à utiliser le format YYYY-MM-DD
+            var empruntsFiltered = emprunts.Where(e => e.DateRetour.Date == date);
+
+            return Ok(empruntsFiltered);
+        }
+
+        // Récupérer tous les emprunts avec la date d'emprunt demandée 
+        [HttpGet("api/GetEmpruntsbyEmprunt")]
+        [SwaggerOperation(
+          Summary = "Récupèrer tous les emprunts par date d'emprunt (Format YYYY-MM-DD)",
+          Description = "Récupère tous les emprunts par date d'emprunt",
+          OperationId = "GetEmpruntsbyEmprunt")]
+        [SwaggerResponse(200, "Retrouvez tous les emprunts à la date d'emprunt choisie", typeof(Emprunt))]
+        [SwaggerResponse(400, "Requête invalide")]
+        public IActionResult GetEmpruntsbyEmprunt(DateTime date)
+        { 
+            var emprunts = LibrIODb.Emprunt;
+            // .Date force à utiliser le format YYYY-MM-DD
+            var empruntsFiltered = emprunts.Where(e => e.DateEmprunt.Date == date);
 
             return Ok(empruntsFiltered);
         }
@@ -145,6 +179,41 @@ namespace LibrIO.Controllers
             return Ok(emprunt);
         }
 
+        // Rendre un livre
+        // Rendre un livre permet d'archiver l'emprunt mais ne le supprime pas
+        [HttpPut("api/RendreEmprunt")]
+        [SwaggerOperation(
+          Summary = "Rendre un emprunt afin de l'utiliser dans l'historique utilisateur",
+          Description = "Rend un emprunt",
+          OperationId = "RendreEmprunt")]
+        [SwaggerResponse(200, "Le livre a bien été rendu, l'emprunt a été archivé", typeof(Emprunt))]
+        [SwaggerResponse(400, "Rêquête invalide")]
+
+        // J'utilise empruntDTOupdate, une autre version de mon DTO qui me permet de modifier la DateRetour, autrement assignée à la création
+        public IActionResult RendreEmprunt([FromQuery] int id)
+        {
+            var emprunt = LibrIODb.Emprunt.Find(id);
+
+            if (emprunt == null)
+            {
+                return NotFound("Pas d'emprunt trouvé !");
+            }
+
+            emprunt.Encours = false;
+
+            // Récupérer le livre correspondant au Id_Livre
+            var livre = LibrIODb.Livre.SingleOrDefault(e => e.Id == emprunt.Id_Livre);
+
+            if (livre != null)
+            {
+                // Passer le livre en à nouveau disponible  
+                livre.Disponibilite = true;
+            }
+
+            LibrIODb.SaveChanges();
+            return Ok(emprunt);
+        }
+
 
         // Supprimer un emprunt 
         [HttpDelete("api/DeleteEmprunt")]
@@ -166,8 +235,11 @@ namespace LibrIO.Controllers
             // Récupérer le livre correspondant au Id_Livre
             var livre = LibrIODb.Livre.SingleOrDefault(e => e.Id == emprunt.Id_Livre);
 
-            // Passer le livre en à nouveau disponible  
-            livre.Disponibilite = true;
+            if (livre != null)
+            {
+                // Passer le livre en à nouveau disponible  
+                livre.Disponibilite = true;
+            }
 
             LibrIODb.Remove(emprunt);
             LibrIODb.SaveChanges();

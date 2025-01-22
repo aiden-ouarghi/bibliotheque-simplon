@@ -33,9 +33,10 @@ namespace LibrIO.Controllers
                 Titre = livreDTO.Titre,
                 ISBN = livreDTO.ISBN,
                 Edition = livreDTO.Edition,
-                AuteurId = (int)livreDTO.AuteurId,
+                AuteurId = livreDTO.AuteurId,
                 CategorieId = livreDTO.CategorieId,
-                GenreId = livreDTO.GenreId
+                GenreId = livreDTO.GenreId,
+                Disponibilite = true
             };
             
             //créer un livre 
@@ -60,6 +61,24 @@ namespace LibrIO.Controllers
             // les affiche 
             return Ok(allLivre);
         }
+
+        // Récupérer tous les livres disponibless
+        [HttpGet("GetAllLivresDispo")]
+        [SwaggerOperation(
+          Summary = "Récupèrer tous les livres disponibles",
+          Description = "Récupère tous les livres disponibles",
+          OperationId = "GetAllLivresDispo")]
+        [SwaggerResponse(200, "Retrouvez tous les emprunts en cours", typeof(Emprunt))]
+        [SwaggerResponse(400, "Requête invalide")]
+        public IActionResult GetAllLivresDispo(LibrIODb librIODb)
+        {
+            var livres = _dbLivre.Livre;
+            var livresFiltered = livres.Where(e => e.Disponibilite == true);
+
+            return Ok(livresFiltered);
+        }
+
+
         [HttpGet("api/GetCategorie")]
         [SwaggerOperation(
             Summary = "Montre les Livre demander",

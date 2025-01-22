@@ -12,6 +12,7 @@ namespace LibrIO.Classes
         // Foreign keys vers la table livre et la table membre 
         public int Id_Livre { get; set; }
         public int Id_Membre { get; set; }
+        public bool Encours { get; set; }
 
         // Navigation 
         public Livre? Livre { get; set; }
