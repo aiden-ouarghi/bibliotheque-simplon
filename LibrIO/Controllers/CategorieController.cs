@@ -65,6 +65,7 @@ namespace LibrIO.Controllers
         [SwaggerResponse(400, "Demande invalide")]
         public IActionResult GetCategiorie([FromQuery] Categorie categories)
         {
+
             var categorie = _dbLivre.Categorie.AsQueryable();
 
             categorie = FiltreRecherche.AppliquerFiltres(categorie, categories);
@@ -103,7 +104,7 @@ namespace LibrIO.Controllers
     OperationId = "PutCategorie")]
         [SwaggerResponse(200, "Auteur ajouté avec succès")]
         [SwaggerResponse(400, "Demande invalide")]
-        public IActionResult PutCategorie(int id,[FromQuery] CategorieDTO categorieDTO)
+        public IActionResult UpdateCategorie(int id,[FromQuery] CategorieDTO categorieDTO)
         {
             // Cherche L'id demander
             var categorie = _dbLivre.Categorie.Find(id);

@@ -16,6 +16,7 @@ namespace LibrIO.Data
         public DbSet<Categorie> Categorie { get; set; }
         public DbSet<Emprunt> Emprunt { get; set; }
         public DbSet<Membre> Membre { get; set; }
+        public DbSet<Employe> Employe { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -37,8 +38,7 @@ namespace LibrIO.Data
              // si je veut HasMany transformer en liste car c'est possible sur ce cas un livre pourrais avoir plusieur genre
              .HasOne(livre => livre.Genre)
              .WithMany(genre => genre.Livres)
-             .HasForeignKey(livre => livre.GenreId);           
-
+             .HasForeignKey(livre => livre.GenreId);
             // Configuration de Emprunt
             modelBuilder.Entity<Emprunt>()
                 .Property(e => e.Id);
@@ -52,6 +52,7 @@ namespace LibrIO.Data
                 .HasOne(e => e.Membre)
                 .WithMany(m => m.Emprunt)
                 .HasForeignKey(e => e.Id_Membre);
+
 
         }
     }

@@ -112,7 +112,7 @@ namespace LibrIO.Controllers
             OperationId = "PutAuteur")]
         [SwaggerResponse(200, "Auteur Modifier avec succès")]
         [SwaggerResponse(400, "Demande invalide")]
-        public IActionResult PutAuteur(int id, [FromQuery] AuteurDTO auteurDTO)
+        public IActionResult UpdateAuteur(int id, [FromQuery] AuteurDTO auteurDTO)
         {
             // Cherche L'id demander
             var auteur = _dbLivre.Auteur.Find(id);

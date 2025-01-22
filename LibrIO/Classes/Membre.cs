@@ -8,10 +8,8 @@ namespace LibrIO.Classes
         public string Nom { get; set; }
         public string Prenom { get; set; }
         public string Mail { get; set; }
-
-
-        [JsonIgnore] // Empêche la sérialisation de cette propriété
-        public ICollection<Emprunt> Emprunt { get; set; }
+        [JsonIgnore]
+        public ICollection<Emprunt> Emprunts { get; set; }
 
     }
 }

@@ -14,11 +14,9 @@ builder.Services.AddControllers();
 builder.Services.AddOpenApi();
 builder.Services.AddEndpointsApiExplorer();
 
-// Ajouter DbContext et configuration de la base de données SQLite
 builder.Services.AddDbContext<LibrIODb>(options =>
     options.UseSqlite("Data Source=LibrIO.db"));
 
-// Ajouter les services nécessaires, comme les contrôleurs et Swagger
 builder.Services.AddControllers();
 builder.Services.AddSwaggerGen(c =>
 {
@@ -30,10 +28,9 @@ builder.Services.AddSwaggerGen(c =>
     });
     c.EnableAnnotations();
 });
+var app = builder.Build(); 
 
-var app = builder.Build(); // Construire l'application après avoir ajouté les services
 
-// Vérifiez si l'environnement est en développement pour activer Swagger
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -56,6 +53,5 @@ using (var scope = app.Services.CreateScope())
 
 app.MapControllers();
 
-// Démarrer l'application
 app.Run();
 

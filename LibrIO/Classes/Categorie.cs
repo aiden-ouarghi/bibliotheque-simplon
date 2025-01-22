@@ -7,6 +7,9 @@ namespace LibrIO.Classes
         public int? Id { get; set; }
         public string? Nom { get; set; }
         [JsonIgnore]
-        public ICollection<Livre> Livre { get; set; }
+        public ICollection<Livre>? Livre { get; set; }
+
     }
+
+
 }
