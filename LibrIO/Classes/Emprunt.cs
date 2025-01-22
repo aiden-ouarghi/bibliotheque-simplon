@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace LibrIO.Classes
 {
@@ -15,7 +16,10 @@ namespace LibrIO.Classes
         public bool Encours { get; set; }
 
         // Navigation 
+        [JsonIgnore]
         public Livre? Livre { get; set; }
+
+        [JsonIgnore]
         public Membre? Membre { get; set; }
     }
 }
