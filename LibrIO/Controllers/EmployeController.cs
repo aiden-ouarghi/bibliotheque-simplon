@@ -61,7 +61,7 @@ namespace LibrIO.Controllers
             // les affiche
             return Ok(allEmploye);
         }
-        [HttpGet]
+        [HttpGet("api/get")]
         [SwaggerOperation(
     Summary = "Montre les employe avec les critère demander",
     Description = "Ici seras montrer tous les catalogue",

@@ -59,7 +59,7 @@ public static class DbInitializer
         string genresFilePath = Directory.GetCurrentDirectory() + "\\JsonData\\genres.json";
         string auteursFilePath = Directory.GetCurrentDirectory() + "\\JsonData\\auteurs.json";
 
-        // Charger les catégories
+        //Charger les catégories
         if (!context.Categorie.Any())
         {
             var categoriesJson = File.ReadAllText(categoriesFilePath);

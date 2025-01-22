@@ -65,7 +65,7 @@ namespace LibrIO.Controllers
         }
         // ici faudras le renommer au bon vouloir de chacun 
         // Pourquoi Ici j'utilise Membre ? Et non MembreDTO Car Le DTO ne contient pas D'id 
-        [HttpGet]
+        [HttpGet("api/get")]
         [SwaggerOperation(
     Summary = "chercher un Membre",
     Description = "Permet de rechercher un membre avec des critere de recherche ",

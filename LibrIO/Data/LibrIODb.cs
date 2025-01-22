@@ -16,6 +16,7 @@ namespace LibrIO.Data
         public DbSet<Categorie> Categorie { get; set; }
         public DbSet<Emprunt> Emprunt { get; set; }
         public DbSet<Membre> Membre { get; set; }
+        public DbSet<Employe> Employe { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -38,12 +39,22 @@ namespace LibrIO.Data
              .HasOne(livre => livre.Genre)
              .WithMany(genre => genre.Livres)
              .HasForeignKey(livre => livre.GenreId);
-            // relation catalogue livre
-            modelBuilder.Entity<Livre>()
-             .HasOne(livre => livre.Catalogues)  
-                .WithOne(catalogue => catalogue.Livre)     
-                .HasForeignKey<Catalogue>(catalogue => catalogue.livreId); 
-            
+            // Configuration de Emprunt
+
+            modelBuilder.Entity<Emprunt>()
+                .Property(e => e.Id);
+
+            modelBuilder.Entity<Emprunt>()
+                .HasOne(e => e.Livre)
+                .WithMany(l => l.Emprunt)
+                .HasForeignKey(e => e.Id_Livre);
+
+            modelBuilder.Entity<Emprunt>()
+                .HasOne(e => e.Membre)
+                .WithMany(m => m.Emprunts)
+                .HasForeignKey(e => e.Id_Membre);
+
+
         }
     }
 }

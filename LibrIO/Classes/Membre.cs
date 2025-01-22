@@ -1,4 +1,6 @@
-﻿namespace LibrIO.Classes
+﻿using System.Text.Json.Serialization;
+
+namespace LibrIO.Classes
 {
     public class Membre
     {
@@ -6,7 +8,7 @@
         public string Nom { get; set; }
         public string Prenom { get; set; }
         public string Mail { get; set; }
-
+        [JsonIgnore]
         public ICollection<Emprunt> Emprunts { get; set; }
 
     }

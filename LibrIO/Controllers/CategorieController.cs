@@ -65,6 +65,7 @@ namespace LibrIO.Controllers
         [SwaggerResponse(400, "Demande invalide")]
         public IActionResult GetCategiorie([FromQuery] Categorie categories)
         {
+
             var categorie = _dbLivre.Categorie.AsQueryable();
 
             categorie = FiltreRecherche.AppliquerFiltres(categorie, categories);

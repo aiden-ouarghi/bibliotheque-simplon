@@ -1,4 +1,5 @@
 ﻿using LibrIO.Classes_DTO;
+using System.Text.Json.Serialization;
 
 namespace LibrIO.Classes
 {
@@ -17,9 +18,13 @@ namespace LibrIO.Classes
         public int? GenreId { get; set; }
 
         // Nav 
+        [JsonIgnore]
         public Auteur Auteur { get; set; }
+        [JsonIgnore]
         public Categorie? Categorie { get; set; }
+        [JsonIgnore]
         public Genre? Genre { get; set; }
+        [JsonIgnore]
         public ICollection<Emprunt>? Emprunt { get; set; }
 
     }
