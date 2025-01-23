@@ -13,142 +13,143 @@ namespace LibrIO.Controllers
     public class MembreController : ControllerBase
     {
         private readonly LibrIODb _dbLivre;
-        // sa m'evite la valeur Null donc ouaip je garde..
+        // Évite la valeur Null 
         public MembreController(LibrIODb dbcontext)
         {
             _dbLivre = dbcontext;
         }
 
-        // créer un membre
+        // Créer un membre
         [HttpPost]
         [SwaggerOperation(
-    Summary = "Créer un membre ",
-    Description = "entrer les donnée d'un membre Prenom, Nom, Mail",
+    Summary = "Créer un membre",
+    Description = "Entre les informations d'un membre : prénom, nom et mail.",
     OperationId = "PostMmembre")]
-        [SwaggerResponse(200, "Membre créer !")]
+        [SwaggerResponse(200, "Membre créé avec succès !")]
         [SwaggerResponse(400, "Demande invalide")]
         public IActionResult PostMembre(MembreDTO MembreDTO)
         {
-            // information demander //
+            // Informations demandées
             var MembreEntite = new Membre()
             {
                 Prenom = MembreDTO.Prenom,
                 Nom = MembreDTO.Nom,
                 Mail = MembreDTO.Mail
             };
-            // Ajout a la DB
+            // Ajout à la DB
             _dbLivre.Membre.Add(MembreEntite);
-            // sauvegarde
+            // Sauvegarde
             _dbLivre.SaveChanges();
-            // affichage
+            // Affichage
             return Ok(MembreEntite);
         }
-        // Afficher tous les membre
+        // Affiche tous les membres
         [HttpGet]
         [SwaggerOperation(
-    Summary = "Afficher tout les membre",
-    Description = "ici vous pourrez voir tou les membre ",
+    Summary = "Affiche tous les membres.",
+    Description = "Permet d'afficher tous les membres.",
+
     OperationId = "PutAuteur")]
-        [SwaggerResponse(200, "Auteur Modifier avec succès")]
-        [SwaggerResponse(400, "Demande invalide")]
+        [SwaggerResponse(200, "Livre modifié avec succès !")]
+        [SwaggerResponse(400, "Demande invalide.")]
         public IActionResult GetAllMembres()
         {
-            // Selectionne tout les membre 
+            // Séléctionne tous les membres 
             var allMembre = _dbLivre.Membre.ToList();
 
             if (allMembre == null)
             {
-                return NotFound("Aucun Membre na était enregistrer");
+                return NotFound("Aucun membre n'a été enregistré.");
             }
-            // les affiche
+            // Les affiche
             return Ok(allMembre);
         }
-        // ici faudras le renommer au bon vouloir de chacun 
-        // Pourquoi Ici j'utilise Membre ? Et non MembreDTO Car Le DTO ne contient pas D'id 
+        // Renommer selon les besoins de chacun
+        // Utilise empruntDTOupdate, une autre version de mon DTO qui me permet de modifier la DateRetour, autrement assignée à la création
         [HttpGet("api/get")]
         [SwaggerOperation(
-    Summary = "chercher un Membre",
-    Description = "Permet de rechercher un membre avec des critere de recherche ",
+    Summary = "Cherche un membre.",
+    Description = "Permet de rechercher un membre avec des critères de recherche.",
     OperationId = "GetMembre")]
-        [SwaggerResponse(200, "Auteur Modifier avec succès")]
-        [SwaggerResponse(400, "Demande invalide")]
-        // trouver un membre ou plusiuer selon la recherche
+        [SwaggerResponse(200, "Membre modifié avec succès !")]
+        [SwaggerResponse(400, "Demande invalide.")]
+        // Trouve un membre ou plusieur selon la recherche
         public IActionResult GetMembre([FromQuery] Membre RechercheMembre)
         {
-            //AsQueryable a definir precisément juste sa rend les donnée sortie de base de donnée plus flexible et manipulable dans ce cas ci sa me permet de 
-            //faire ma recherche comme je le souhaite 
+            // AsQueryable permet de rendre les données plus flexibles et manipulables
+            // Dans ce cas, cela permet de modifier la recherche selon les besoins
             var Membre = _dbLivre.Membre.AsQueryable();
 
             Membre = FiltreRecherche.AppliquerFiltres(Membre, RechercheMembre);
-            // la condition si Id est supérieur a 0 
+            // La condition si l'ID est supérieur à 0 
             if (RechercheMembre.Id > 0)
             {
-                // cherche dans Membre 
+                // Cherche dans membre 
                 Membre = Membre.Where(membreId => membreId.Id == RechercheMembre.Id);
             }
-            //Fait la requete  
+            // Fait la requête  
             var MembreEntite = Membre.ToList();
-            //si rien n'est trouver 
+            // Si rien n'est trouvé
             if (!MembreEntite.Any())
             {
                 // Message d'erreure 
-                return NotFound("Aucun membre trouvée avec les critère demander !");
+                return NotFound("Aucun membre trouvé avec les critères demandé !");
             }
             else
             {
-                // Montre la valeur demander
+                // Affiche la valeur demandé
                 return Ok(MembreEntite);
             }
         }
-        //Delete Membre
+        // SUPPRIME un membre
         [HttpDelete("{id}")]
         [SwaggerOperation(
-    Summary = "Suprimer un membre",
-    Description = "Permet de selectionner un membre par son ID et le suprimer",
+    Summary = "Supprime un membre.",
+    Description = "Permet de selectionner un membre par son ID et de le supprimer.",
     OperationId = "DeleteMembre")]
-        [SwaggerResponse(200, "Membre suprimer avec succès")]
-        [SwaggerResponse(400, "Demande invalide")]
+        [SwaggerResponse(200, "Membre supprimé avec succès !")]
+        [SwaggerResponse(400, "Demande invalide.")]
         public IActionResult DeleteMembre(int id)
         {
-            // cherche si tu le Membre exist
+            // Cherche si le membre existe
             var membre = _dbLivre.Membre.Find(id);
-            //Si le membre n'existe pas retourn RIEN 
+            // Si le membre n'existe pas retourne Null 
             if (membre == null)
             {
-                return NotFound("l'id n'est pas trouver !");
+                return NotFound("ID n'a pas été trouvé !");
             }
-            // Sinon Suprime le membre de la DB
+            // Sinon Supprime le membre de la DB
             _dbLivre.Membre.Remove(membre);
-            // Sauvegarde les changement
+            // Sauvegarde les changements
             _dbLivre.SaveChanges();
-            // retourn rien car le membre a était surpimer
+            // Retourne la valeur Null car le membre a été supprimé
             return NoContent();
         }
-        //// Modifier un Membre 
+        // MODOFIE un membre 
         [HttpPut("{id}")]
         [SwaggerOperation(
-    Summary = "Modifier les information des membre",
-    Description = "Permet de saisir un ID et de modifier le membre lié a l'Id",
+    Summary = "Modifie les informations des membres.",
+    Description = "Permet de saisir un ID et de modifier le membre lié a l'ID.",
     OperationId = "UpdateMembre")]
         [SwaggerResponse(200, "Membre Modifier avec succès")]
         [SwaggerResponse(400, "Demande invalide")]
         public IActionResult UpdateMembre(int id, MembreDTO membreDTO)
         {
-            // Cherche L'id demander
+            // Cherche l'ID demandé
             var membre = _dbLivre.Membre.Find(id);
-            // si l'id demander n'est pas trouver
+            // Si l'ID demandé n'est pas trouvé
             if (membre == null)
             {
-                //retourn Notfound
-                return NotFound("l'id n'est pas trouver !");
+                // Retourne NotFound
+                return NotFound("L'ID n'a pas été trouvé !");
             }
-            // se qui est modifiafle 
+            // Ce qui est modifiable 
             membre.Prenom = membreDTO.Prenom;
             membre.Nom = membreDTO.Nom;
             membre.Mail = membreDTO.Mail;
-            // la sauvegarde 
+            // La sauvegarde 
             _dbLivre.SaveChanges();
-            // affichage
+            // L'affiche
             return Ok(membre);
         }
     }

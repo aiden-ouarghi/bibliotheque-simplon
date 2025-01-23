@@ -13,56 +13,56 @@ namespace LibrIO.Controllers
     public class CategorieController : ControllerBase
     {
         private readonly LibrIODb _dbLivre;
-        // eviter la valeur Null 
+        // Évite la valeur Null 
         public CategorieController(LibrIODb librioDB)
         {
             _dbLivre = librioDB;
         }
-        // Créer une categorie 
+        // Créer une catégorie 
         [HttpPost("api/PostCategorie")]
         [SwaggerOperation(
-            Summary = "Ajoute une Categorie",
-            Description = "La Categorie sert a dire si c'est un Roman/Manga/Novel ect ",
+            Summary = "Ajoute une catégorie.",
+            Description = "La catégorie permet d'indiquer si c'est un Roman/Manga/Novel, etc. ",
             OperationId = "PostCategorie")]
-        [SwaggerResponse(200, "Categorie ajouté avec succès")]
-        [SwaggerResponse(400, "Demande invalide")]
+        [SwaggerResponse(200, "Catégorie ajoutée avec succès !")]
+        [SwaggerResponse(400, "Demande invalide.")]
         public IActionResult PostCategorie([FromQuery] CategorieDTO categorieDTO)
         {
-            // la saisie 
+            // La saisie 
             var categorie = new Categorie()
             {
                 Nom = categorieDTO.Nom
             };
-            // ajoute la categorie créer 
+            // Ajoute la catégorie créée
             _dbLivre.Categorie.Add(categorie);
-            // la sauvegarde 
+            // La sauvegarde 
             _dbLivre.SaveChanges();
-            // affiche 
+            // L'affiche 
             return Ok(categorie);
         }
-        // montrer toute les categorie
+        // Affiche toutes les catégories
         [HttpGet]
         [SwaggerOperation(
-    Summary = "Montre toute les Categorie",
-    Description = "Ici seras montrer toute les categorie par odre D'id ",
+    Summary = "Affiche toutes les catégories.",
+    Description = "Affiche toutes les catégories triées par ordre d'ID.",
     OperationId = "GetAllCategorie")]
-        [SwaggerResponse(200, "Les Categorie Sont montrer avec succés")]
-        [SwaggerResponse(400, "Demande invalide")]
+        [SwaggerResponse(200, "Les catégories sont affichées avec succès !")]
+        [SwaggerResponse(400, "Demande invalide.")]
         public IActionResult GetAllCategorie()
         {
-            //Selectionne toute les Categorie
+            // Séléctionne toutes les catégories
             var allCategorie = _dbLivre.Categorie.ToList();
-            // les affiche 
+            // Les affiche 
             return Ok(allCategorie);
         }
-        // le chemin a taper Obligatoire 
+        // Le chemin d'accès obligatoire
         [HttpGet("api/GetCategorie")]
         [SwaggerOperation(
-    Summary = "Montre les Categorie demander",
-    Description = "Ici seras montrer les Categorie avec les critère demander",
+    Summary = "Affiche toutes les catégories.",
+    Description = "Affiche les catégories correspondant aux critères demandés.",
     OperationId = "GetCategorie")]
-        [SwaggerResponse(200, "Categorie montrer avec succès")]
-        [SwaggerResponse(400, "Demande invalide")]
+        [SwaggerResponse(200, "Les catégories ont été affichées avec succès !")]
+        [SwaggerResponse(400, "Demande invalide.")]
         public IActionResult GetCategiorie([FromQuery] Categorie categories)
         {
 
@@ -71,54 +71,54 @@ namespace LibrIO.Controllers
             categorie = FiltreRecherche.AppliquerFiltres(categorie, categories);
             return Ok(categorie);
         }
-        //Delete Categorie
+        // SUPPRIME une catégorie
         [HttpDelete("{id}")]
         [SwaggerOperation(
-    Summary = "Suprime une Categorie",
-    Description = "Permet de suprimer une Categorie Par son ID ",
+    Summary = "Supprime une catégorie.",
+    Description = "Permet de supprimer une catégorie par son ID.",
     OperationId = "DeleteCategorie")]
-        [SwaggerResponse(200, "Categorie suprimer avec succès")]
-        [SwaggerResponse(400, "Demande invalide")]
+        [SwaggerResponse(200, "Catégorie supprimée avec succès.")]
+        [SwaggerResponse(400, "Demande invalide.")]
         public IActionResult DeleteCategorie(int id)
         {
-            // cherche si la Catgeorie exist
+            // Cherche si la catégorie existe
             var categorie = _dbLivre.Categorie.Find(id);
-            //Si le categorie n'existe pas retourn RIEN 
+            //  Si la catégorie n'existe pas, retourne Null 
             if (categorie == null)
             {
-                //Message d'erreure
-                return NotFound("l'id n'est pas trouver !");
+                // Message d'erreur
+                return NotFound("L'ID n'a pas été trouvé.");
             }
-            // Sinon Suprime la Categorie de la DB
+            // Sinon supprime la catégorie de la DB
             _dbLivre.Categorie.Remove(categorie);
-            // Sauvegarde les changement
+            // Sauvegarde les changements
             _dbLivre.SaveChanges();
-            // retourn rien car le categorie a était surpimer
+            // Ne retourne rien car la catégorie a été supprimée
             return NoContent();
         }
-        //Modifier une categorie
+        // MODIFIE une catégorie
         [HttpPut("{id}")]
         [SwaggerOperation(
-    Summary = "Modifier une Categorie",
-    Description = "Vous pourrez modifier une Categorie en saisissant L'id Et en modifiant le Nom",
+    Summary = "Modifie une catégorie.",
+    Description = "Permet de modifier une catégorie par son ID et en modifiant son nom.",
     OperationId = "PutCategorie")]
-        [SwaggerResponse(200, "Auteur ajouté avec succès")]
-        [SwaggerResponse(400, "Demande invalide")]
+        [SwaggerResponse(200, "Catégorie ajoutée avec succès !")]
+        [SwaggerResponse(400, "Demande invalide.")]
         public IActionResult UpdateCategorie(int id,[FromQuery] CategorieDTO categorieDTO)
         {
-            // Cherche L'id demander
+            // Cherche L'ID demandé
             var categorie = _dbLivre.Categorie.Find(id);
-            // si l'id demander n'est pas trouver
+            // Si l'ID demandé n'est pas trouvé
             if (categorie == null)
             {
-                //retourn Notfound
-                return NotFound("l'id n'est pas trouver !");
+                // Retourne NotFound
+                return NotFound("L'ID n'a pas été trouvé.");
             }
-            // se qui est modifiafle 
+            // Ce qui est modifiable 
             categorie.Nom = categorieDTO.Nom;
-            // la sauvegarde 
+            // La sauvegarde 
             _dbLivre.SaveChanges();
-            // affichage
+            // L'affiche
             return Ok(categorie);
         }
     }

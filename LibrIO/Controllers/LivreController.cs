@@ -13,21 +13,21 @@ namespace LibrIO.Controllers
     public class LivreController : ControllerBase
     {
         private readonly LibrIODb _dbLivre;
-        // eviter la valeur Null 
+        // Évite la valeur Null 
         public LivreController(LibrIODb librioDB)
         {
             _dbLivre = librioDB;
         }
         [HttpPost]
         [SwaggerOperation(
-            Summary = "créer un livre et l'ajoute au catalogue",
-            Description = "Créer un livre et l'ajoute au catalogue",
+            Summary = "Crée un livre et l'ajoute au catalogue.",
+            Description = "Crée un livre et l'ajoute au catalogue.",
             OperationId = "PostLivre")]
-        [SwaggerResponse(200, " Le livre était créer et ajouter au caalogue avec succes")]
-        [SwaggerResponse(400, "Demande invalide")]
+        [SwaggerResponse(200, "Le livre a été créé et ajouté au catalogue avec succès.")]
+        [SwaggerResponse(400, "Demande invalide.")]
         public IActionResult PostLivre([FromQuery] LivreDTO livreDTO)
         {
-            // la saisie 
+            // La saisie 
             var livre = new Livre()
             {
                 Titre = livreDTO.Titre,
@@ -39,34 +39,34 @@ namespace LibrIO.Controllers
                 Disponibilite = true
             };
 
-            // affiche 
+            // L'affiche 
             return Ok(livre);
         }
         [HttpGet]
         [SwaggerOperation(
-   Summary = "Montre toute les Livre",
-   Description = "Ici seras montrer toute les Livre par odre D'id ",
+   Summary = "Affiche tous les livres.",
+   Description = "Affiche tous les livres triés par ordre d'ID.",
    OperationId = "GetAllLivre")]
-        [SwaggerResponse(200, "Les Livre Sont montrer avec succés")]
+        [SwaggerResponse(200, "Les livres sont affichés avec succès.")]
 
-        [SwaggerResponse(400, "Demande invalide")]
+        [SwaggerResponse(400, "Demande invalide.")]
         public IActionResult GetAllLivre()
         {
-            //Selectionne toute les Categorie
+            // Séléctionne tous les livres
             var allLivre = _dbLivre.Livre.ToList();
-            // les affiche 
+            // Les affiche 
             return Ok(allLivre);
         }
 
         [HttpGet("api/GetLivre")]
-        // Récupérer tous les livres disponibless
+        // Récupère tous les livres disponibles
         [HttpGet("GetAllLivresDispo")]
         [SwaggerOperation(
-          Summary = "Récupèrer tous les livres disponibles",
-          Description = "Récupère tous les livres disponibles",
+          Summary = "Récupère tous les livres disponibles.",
+          Description = "Retourne la liste de tous les livres actuellement disponibles.",
           OperationId = "GetAllLivresDispo")]
-        [SwaggerResponse(200, "Retrouvez tous les emprunts en cours", typeof(Emprunt))]
-        [SwaggerResponse(400, "Requête invalide")]
+        [SwaggerResponse(200, "Voici tous les emprunts actuellement en cours.", typeof(Emprunt))]
+        [SwaggerResponse(400, "Demande invalide.")]
         public IActionResult GetAllLivresDispo(LibrIODb librIODb)
         {
             var livres = _dbLivre.Livre;
@@ -78,11 +78,11 @@ namespace LibrIO.Controllers
 
         [HttpGet("api/GetCategorie")]
         [SwaggerOperation(
-            Summary = "Montre les Livre demander",
-            Description = "Ici seras montrer les Livre avec les critère demander",
+            Summary = "Affiche les livres demandés.",
+            Description = "Affiche les livres correspondant aux critères demandés.",
             OperationId = "GetLivre")]
-        [SwaggerResponse(200, "Categorie montrer avec succès")]
-        [SwaggerResponse(400, "Demande invalide")]
+        [SwaggerResponse(200, "Livres affichés avec succès !")]
+        [SwaggerResponse(400, "Demande invalide.")]
         public IActionResult GetLivre([FromQuery] LivreDToRecherceh livres)                                                                                                                                                                                                                                                                         
         {
             var livre = _dbLivre.Livre.AsQueryable();
@@ -90,8 +90,8 @@ namespace LibrIO.Controllers
             livre = FiltreRecherche.AppliquerFiltres(livre, livres);
             return Ok(livre);
         }
-        // Alors enfaite sa delete Livre et Catalogue car si le livre n'existe pas le catalogue nomplue ? logique.
-        //Delete Categorie
+        // Supprime le livre et le catalogue associé. Si le livre n'existe pas, le catalogue devient obsolète.
+        // Supprimer un livre
         [HttpGet("api/GetLivreByID")]
         public IActionResult GetLivreById([FromQuery] int id)
         {
@@ -103,49 +103,49 @@ namespace LibrIO.Controllers
 
         [HttpDelete("{id}")]
         [SwaggerOperation(
-            Summary = "Suprime une Livre",
-            Description = "Permet de suprimer un livre et le l'id catalogue lié au livre",
+            Summary = "Supprime un livre",
+            Description = "Permet de supprimer un livre ainsi que l'ID du catalogue associé à ce livre.",
             OperationId = "DeleteLivre")]
-        [SwaggerResponse(200, "Livre supprimé avec succes")]
-        [SwaggerResponse(400, "Demande invalide")]
+        [SwaggerResponse(200, "Livre supprimé avec succès !")]
+        [SwaggerResponse(400, "Demande invalide.")]
         public IActionResult DeleteLivre(int id)
         {
-            // cherche si la Catgeorie exist
+            // Cherche si le livre existe
             var livre = _dbLivre.Livre.Find(id);
-            //Si le categorie n'existe pas retourn RIEN 
+            // Si le livre n'existe pas, retourne Null.
             if (livre == null)
             {
                 //Message d'erreure
-                return NotFound("l'id n'est pas trouver !");
+                return NotFound("ID n'a pas été trouvé !");
             }
-            // Sinon Suprime le livre de la DB
+            // Sinon supprime le livre de la DB
             _dbLivre.Livre.Remove(livre);
-            // Sauvegarde les changement
+            // Sauvegarde les changements
             _dbLivre.SaveChanges();
-            // retourn rien car le categorie a était surpimer
+            // Ne retourne rien car le livre a été supprimé
             return NoContent();
         }
         [HttpPut("{id}")]
         public IActionResult UpdateLivre(int id, LivreDTO livreDTO)
         {
-            // Cherche L'id demander
+            // Cherche L'ID demandé
             var livre = _dbLivre.Livre.Find(id);
-            // si l'id demander n'est pas trouver
+            // Si l'ID demandé n'est pas trouvé
             if (livre == null)
             {
-                //retourn Notfound
-                return NotFound("l'id n'est pas trouver !");
+                // Retourne NotFound
+                return NotFound("L'ID n'a pas été trouvé !");
             }
-            // se qui est modifiafle 
+            // Ce qui est modifiable 
             livre.Titre = livreDTO.Titre;
             livre.ISBN = livreDTO.ISBN;
             livre.Edition = livreDTO.Edition;
             livre.AuteurId = livreDTO.AuteurId;
             livre.GenreId = livreDTO.GenreId;
             livre.CategorieId = livreDTO.CategorieId;
-            // la sauvegarde 
+            // La sauvegarde 
             _dbLivre.SaveChanges();
-            // affichage
+            // L'affiche
             return Ok(livre);
         }
     }

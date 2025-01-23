@@ -12,127 +12,128 @@ namespace LibrIO.Controllers
     public class EmployeController : ControllerBase
     {
         private readonly LibrIODb _dbLivre;
-        // sa m'evite la valeur Null donc ouaip je garde..
+        // Empêche la valeur Null
         public EmployeController(LibrIODb dbcontext)
         {
             _dbLivre = dbcontext;
         }
-        // créer un employe
+        // Créer un employé
         [HttpPost]
         [SwaggerOperation(
-    Summary = "Ici seras créer un Employe",
-    Description = "Ici seras enregistrer un Employe",
+    Summary = "Crée un employé.",
+    Description = "Enregistre un employé dans la base de données.",
     OperationId = "PostEmploye")]
-        [SwaggerResponse(200, "Employe créer avec succes !")]
-        [SwaggerResponse(400, "Demande invalide")]
+        [SwaggerResponse(200, "Employé créé avec succès !")]
+        [SwaggerResponse(400, "Demande invalide.")]
         public IActionResult PostEmploye(EmployeDTO employeDTO)
         {
-            // information demander //
+            // Informations demandées
             var employe = new Employe()
             {
                 Prenom = employeDTO.Prenom,
                 Nom = employeDTO.Nom,
                 Mail = employeDTO.Mail
             };
-            // Ajout a la DB
+            // Ajout à la DB
             _dbLivre.Employe.Add(employe);
-            // sauvegarde
+            // La sauvegarde
             _dbLivre.SaveChanges();
-            // affichage
+            // L'affiche
             return Ok(employe);
         }
-        // Afficher tous les employe
+        // Affiche tous les employés
         [HttpGet]
         [SwaggerOperation(
-    Summary = "Monstre tous les Employe",
-    Description = "Ici seras montrer tous les Employe",
+    Summary = "Affiche tous les employés.",
+    Description = "Retourne la liste de tous les employés.",
     OperationId = "GetAllEmploye")]
-        [SwaggerResponse(200, "les employer sont visible !")]
-        [SwaggerResponse(400, "Demande invalide")]
+        [SwaggerResponse(200, "Les employés sont affichés avec succès !")]
+        [SwaggerResponse(400, "Demande invalide.")]
         public IActionResult GetAllEmploye()
         {
-            // Selectionne tout les employe
+            // Sélectionne tous les employés
             var allEmploye = _dbLivre.Employe.ToList();
 
             if (allEmploye == null)
             {
-                return NotFound("Aucun employe na était enregistrer");
+                return NotFound("Aucun Employé n'a été enregistré.");
             }
-            // les affiche
+            // Les affiche
             return Ok(allEmploye);
         }
         [HttpGet("api/get")]
         [SwaggerOperation(
-    Summary = "Montre les employe avec les critère demander",
-    Description = "Ici seras montrer tous les catalogue",
-    OperationId = "GetAllCatalogue")]
-        [SwaggerResponse(200, "le catalogue et montrer avec succes !")]
-        [SwaggerResponse(400, "Demande invalide")]
-        // trouver un employe ou plusiuer selon la recherche
+    Summary = "Montre les employés avec les critères demandés.",
+    Description = "Affiche les employés avec les critères demandés.",
+    OperationId = "GetAllEmploye")]
+        [SwaggerResponse(200, "Les employés sont affichés avec succès !")]
+        [SwaggerResponse(400, "Demande invalide.")]
+
+        // Trouve un employé ou plusieurs selon la recherche
         public IActionResult GetEmploye([FromQuery] Employe employes)
         {
-            //AsQueryable a definir precisément juste sa rend les donnée sortie de base de donnée plus flexible et manipulable dans ce cas ci sa me permet de 
-            //faire ma recherche comme je le souhaite 
+            // AsQueryable permet de rendre les données plus flexibles et manipulables
+            // Dans ce cas, cela permet de modifier la recherche selon les besoins
             var employe = _dbLivre.Employe.AsQueryable();
             employe = FiltreRecherche.AppliquerFiltres(employe, employes);
-            //si rien n'est trouver 
+            // Si rien n'est trouvé 
             if (!employe.Any())
             {
-                // Message d'erreure 
-                return NotFound("Aucun Employe trouvée avec les critère demander !");
+                // Message d'erreur
+                return NotFound("Aucun employé trouvé avec les critères demandés.");
             }
-            // Montre la valeur demander
+            // Affiche la valeur demandée
             return Ok(employe);
         }
-        //Delete employe
+        // SUPPRIME un employé
         [HttpDelete("{id}")]
         [SwaggerOperation(
-    Summary = "Suprimer un Employe",
-    Description = "Permet de suprimer un employer sur son ID",
+    Summary = "Supprime un employé.",
+    Description = "Permet de supprimer un employé par son ID.",
     OperationId = "DeleteEmploye")]
-        [SwaggerResponse(200, "Employe Suprimer avec succès")]
-        [SwaggerResponse(400, "Demande invalide")]
+        [SwaggerResponse(200, "Employé supprimé avec succès !")]
+        [SwaggerResponse(400, "Demande invalide.")]
         public IActionResult DeleteEmploye(int id)
         {
-            // cherche si tu le employe exist
+            // Cherche si l'employé existe
             var employe = _dbLivre.Employe.Find(id);
-            //Si le employe n'existe pas retourn RIEN 
+            // Si l'employé n'existe pas, il retourne Null 
             if (employe == null)
             {
-                return NotFound("l'id n'est pas trouver !");
+                return NotFound("l'ID n'a pas été trouvé.");
             }
-            // Sinon Suprime le employe de la DB
+            // Sinon supprime l'employé de la DB
             _dbLivre.Employe.Remove(employe);
-            // Sauvegarde les changement
+            // Sauvegarde les changements
             _dbLivre.SaveChanges();
-            // retourn rien car le employe a était surpimer
+            // Retourne la valeur Null car l'employé a été supprimé
             return NoContent();
         }
-        // Modifier un employe 
+        // MODIFIE un employé 
         [HttpPut("{id}")]
         [SwaggerOperation(
-    Summary = "Modifier les information d'un Employer",
-    Description = "Permet de modifier les information d'un Employer",
+    Summary = "Modifie les informations d'un employé.",
+    Description = "Permet de modifier les informations d'un employé.",
     OperationId = "DeleteEmploye")]
-        [SwaggerResponse(200, "Employe Suprimer avec succès")]
-        [SwaggerResponse(400, "Demande invalide")]
+        [SwaggerResponse(200, "Employé supprimé avec succès !")]
+        [SwaggerResponse(400, "Demande invalide.")]
         public IActionResult UpdateEmploye(int id, EmployeDTO employeDTO)
         {
-            // Cherche L'id demander
+            // Cherche L'ID demandé
             var employe = _dbLivre.Employe.Find(id);
-            // si l'id demander n'est pas trouver
+            // Si l'ID demandé n'est pas trouvé
             if (employe == null)
             {
-                //retourn Notfound
-                return NotFound("l'id n'est pas trouver !");
+                // Retourne NotFound
+                return NotFound("l'ID n'a pas été trouvé !");
             }
-            // se qui est modifiafle 
+            // Ce qui est modifiable 
             employe.Prenom = employeDTO.Prenom;
             employe.Nom = employeDTO.Nom;
             employe.Mail = employeDTO.Mail;
-            // la sauvegarde 
+            // La sauvegarde 
             _dbLivre.SaveChanges();
-            // affichage
+            // L'affiche
             return Ok(employe);
         }
     }

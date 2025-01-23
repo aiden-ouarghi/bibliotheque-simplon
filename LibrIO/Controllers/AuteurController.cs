@@ -12,122 +12,122 @@ namespace LibrIO.Controllers
     public class AuteurController : ControllerBase
     {
         private readonly LibrIODb _dbLivre;
-        // eviter la valeur Null 
+        // Évite la valeur Null 
         public AuteurController(LibrIODb librioDB)
         {
             _dbLivre = librioDB;
         }
         // Créer un auteur
         [HttpPost]
-        // commentaire Swagger
+        // Commentaire Swagger
         [SwaggerOperation(
-            Summary = "Ajoute un auteur",
-            Description = "Pour ajouter un Auteur il faut saisir un prenom ou un nom ou les deux " +
-                    "Dans le cas ou le livre n'a pas d'auteur Par defaut L'id 1 seras Sans nom et sans Prenom2.",
+            Summary = "Ajoute un auteur.",
+            Description = "Ajoute un auteur en saisissant un nom, un prénom ou les deux. " +
+                    "Dans le cas où le livre n'a pas d'auteur par defaut, l'ID 1 sera sans nom et sans prénom.",
             OperationId = "PostAuteur")]
-        [SwaggerResponse(200, "Auteur ajouté avec succès")]
-        [SwaggerResponse(400, "Demande invalide")]
+        [SwaggerResponse(200, "Auteur ajouté avec succès !")]
+        [SwaggerResponse(400, "Demande invalide.")]
         public IActionResult PostAuteur([FromQuery] AuteurDTO auteurDTO)
         { 
-            //la saisie
+            // La saisie
             var auteur = new Auteur()
             {
                 Nom = auteurDTO.Nom,
                 Prenom = auteurDTO.Prenom
             };
-            // ajoute la categorie créer 
+            // Ajoute l'auteur crée
             _dbLivre.Auteur.Add(auteur);
-            // la sauvegarde 
+            // La sauvegarde 
             _dbLivre.SaveChanges();
-            // affiche 
+            // L'affiche 
             return Ok(auteur);
         }
-        // get all Auteur
+        // GET all auteur
         [HttpGet]
         [SwaggerOperation(
-            Summary = "Montre tout les Auteur",
-            Description = "Ici seras montrer tout les Auteur par odre D'id ",
+            Summary = "Affiche tous les auteurs.",
+            Description = "Affiche tous les auteurs par ordre d'ID.",
             OperationId = "GetAllAuteur")]
-        [SwaggerResponse(200, "Les Auteur Sont montrer avec succés")]
-        [SwaggerResponse(400, "Demande invalide")]
+        [SwaggerResponse(200, "Les auteurs sont montrés avec succès !")]
+        [SwaggerResponse(400, "Demande invalide.")]
         public IActionResult GetAllAuteur()
         {
-            //Selectionne tout les Auteur
+            // Séléctionne tous les auteurs
             var allAuteur = _dbLivre.Auteur.ToList();
-            // les affiche 
+            // Les affiche 
             return Ok(allAuteur);
         }
-        // le chemin a taper Obligatoire 
+        // Le chemin d'accès obligatoire
         [HttpGet("api/GetAuteur")]
         [SwaggerOperation(
-            Summary = "Montre les Auteur demander",
-            Description = "Ici seras montrer les Auteur avec les critère demander, Aucune obligation de remplir tout les critère",
+            Summary = "Affiche les auteurs demandés.",
+            Description = "Affiche les auteurs selon les critères demandés. Aucune obligation de remplir tous les critères.",
             OperationId = "GetAuteur")]
-        [SwaggerResponse(200, "Auteur montrer avec succès")]
-        [SwaggerResponse(400, "Demande invalide")]
+        [SwaggerResponse(200, "Auteur affiché avec succès !")]
+        [SwaggerResponse(400, "Demande invalide.")]
         public IActionResult GetAuteur([FromQuery] Auteur auteurs)
         {
             var auteur = _dbLivre.Auteur.AsQueryable();
-            //fait toute les recherche :D 
+            // Fait toutes les recherches :D 
             auteur = FiltreRecherche.AppliquerFiltres(auteur, auteurs);
-            //si la recherche est null 
+            // Si la recherche est Null 
             if (auteur.ToList().Count == 0)
             {
-                // Message d'erreure 
-                return NotFound("Aucun de vos critère na était trouver !");
+                // Message d'erreur 
+                return NotFound("Aucun de vos critères n'a été trouvé.");
             }
-            // si identifient trouver retourne la recherche 
+            // Si l'ID est trouvé, il retourne la recherche 
             return Ok(auteur);
         }
-        // suprimer Auteur 
+        // SUPPRIME un auteur
         [HttpDelete("{id}")]
         [SwaggerOperation(
-            Summary = "Suprime une Auteur",
-            Description = "Permet de suprimer une Auteur Par son ID ",
+            Summary = "Supprime un auteur.",
+            Description = "Supprime un auteur à partir de son ID.",
             OperationId = "DeleteAuteur")]
-        [SwaggerResponse(200, "Categorie suprimer avec succès")]
-        [SwaggerResponse(400, "Demande invalide")]
+        [SwaggerResponse(200, "Auteur supprimé avec succès.")]
+        [SwaggerResponse(400, "Demande invalide.")]
         public IActionResult DeleteAuteur(int id)
         {
-            // cherche si l'Id Auteur exist
+            // Cherche si l'ID Auteur existe
             var auteur = _dbLivre.Auteur.Find(id);
-            //Si l'Auteur n'existe pas retourn RIEN 
+            // Si l'auteur n'existe pas, il retourne Null 
             if (auteur == null)
             {
-                //Message d'erreure
-                return NotFound("l'id n'est pas trouver !");
+                // Message d'erreur
+                return NotFound("L'ID n'a pas été trouvé !");
             }
-            // Sinon Suprime l'Auteur de la DB
+            // Sinon supprime l'auteur de la DB
             _dbLivre.Auteur.Remove(auteur);
-            // Sauvegarde les changement
+            // Sauvegarde les changements
             _dbLivre.SaveChanges();
-            // retourn rien car l'Auteur a était surpimer
+            // Ne retourne rien car l'auteur a été supprimé
             return NoContent();
         }
-        //Modifier un Auteur
+        // MODIFIE un auteur
         [HttpPut("{id}")]
         [SwaggerOperation(
-            Summary = "Modifier un Auteur",
-            Description = " En saisissant L'Id Vous pourrez modifier Le Prenom et Le Nom de l'auteur",
+            Summary = "Modifie un auteur.",
+            Description = "Permet de modifier le nom et/ou le prénom d'un auteur par son ID.",
             OperationId = "PutAuteur")]
-        [SwaggerResponse(200, "Auteur Modifier avec succès")]
-        [SwaggerResponse(400, "Demande invalide")]
+        [SwaggerResponse(200, "Auteur modifié avec succès !")]
+        [SwaggerResponse(400, "Demande invalide.")]
         public IActionResult UpdateAuteur(int id, [FromQuery] AuteurDTO auteurDTO)
         {
-            // Cherche L'id demander
+            // Cherche L'ID demandé
             var auteur = _dbLivre.Auteur.Find(id);
-            // si l'id demander n'est pas trouver
+            // Si l'ID demandé n'est pas trouvé
             if (auteur == null)
             {
-                //retourn Notfound
-                return NotFound("l'id n'est pas trouver !");
+                // Retourne NotFound
+                return NotFound("l'ID n'a pas été trouvé.");
             }
-            // se qui est modifiafle 
+            // Ce qui est modifiable
             auteur.Nom = auteurDTO.Nom;
             auteur.Prenom = auteurDTO.Prenom;
-            // la sauvegarde 
+            // La sauvegarde 
             _dbLivre.SaveChanges();
-            // affichage
+            // L'affiche
             return Ok(auteur);
         }
     }

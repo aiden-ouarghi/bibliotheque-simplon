@@ -13,12 +13,12 @@ namespace LibrIO.Classes
         public bool? StatutEmprunt { get; set; }
         public bool? Disponibilite { get; set; }
 
-        // clé étrangere 
+        // clé étrangère 
         public int? AuteurId { get; set; }
         public int? CategorieId { get; set; }
         public int? GenreId { get; set; }
 
-        // Nav 
+        // Navigation 
         [JsonIgnore]
         public Auteur Auteur { get; set; }
         [JsonIgnore]
