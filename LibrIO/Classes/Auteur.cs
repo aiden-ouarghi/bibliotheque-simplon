@@ -1,4 +1,5 @@
-﻿using System.Text.Json.Serialization;
+﻿using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace LibrIO.Classes
 {
@@ -8,6 +9,6 @@ namespace LibrIO.Classes
         public string? Nom { get; set; }
         public string? Prenom { get; set; }
         [JsonIgnore]
-        public ICollection<Livre> Livre { get; set; }
+        public ICollection<Livre>? Livre { get; set; }
     }
 }

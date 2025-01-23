@@ -1,4 +1,5 @@
 using LibrIO.Classes_DTO;
+using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
 
 
@@ -9,10 +10,10 @@ namespace LibrIO.Classes
         public int? Id { get; set; }
         public string? Titre { get; set; }
         public string? ISBN { get; set; }
+        [StringLength(50)]
         public string? Edition { get; set; }
         public bool? StatutEmprunt { get; set; }
         public bool? Disponibilite { get; set; }
-
         // clé étrangere 
         public int? AuteurId { get; set; }
         public int? CategorieId { get; set; }

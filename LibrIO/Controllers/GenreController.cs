@@ -84,7 +84,7 @@ namespace LibrIO.Controllers
     OperationId = "DeleteGenre")]
         [SwaggerResponse(200, "Genre suprimer avec succes")]
         [SwaggerResponse(400, "Demande invalide")]
-        public IActionResult DeleteGenre([FromQuery] int id)
+        public IActionResult DeleteGenre(int id)
         {
             // cherche si tu le genre exist
             var genre = _dbLivre.Genre.Find(id);

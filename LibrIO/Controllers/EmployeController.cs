@@ -25,7 +25,7 @@ namespace LibrIO.Controllers
     OperationId = "PostEmploye")]
         [SwaggerResponse(200, "Employe créer avec succes !")]
         [SwaggerResponse(400, "Demande invalide")]
-        public IActionResult PostEmploye(EmployeDTO employeDTO)
+        public IActionResult PostEmploye([FromQuery] EmployeDTO employeDTO)
         {
             // information demander //
             var employe = new Employe()

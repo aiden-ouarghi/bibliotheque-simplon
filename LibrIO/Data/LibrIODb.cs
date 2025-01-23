@@ -50,7 +50,7 @@ namespace LibrIO.Data
 
             modelBuilder.Entity<Emprunt>()
                 .HasOne(e => e.Membre)
-                .WithMany(m => m.Emprunt)
+                .WithMany(m => m.Emprunts)
                 .HasForeignKey(e => e.Id_Membre);
 
 

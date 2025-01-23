@@ -83,7 +83,7 @@ namespace LibrIO.Controllers
             OperationId = "GetLivre")]
         [SwaggerResponse(200, "Categorie montrer avec succès")]
         [SwaggerResponse(400, "Demande invalide")]
-        public IActionResult GetLivre([FromQuery] LivreDToRecherceh livres)                                                                                                                                                                                                                                                                         
+        public IActionResult GetLivre([FromQuery] LivreDTO livres)                                                                                                                                                                                                                                                                         
         {
             var livre = _dbLivre.Livre.AsQueryable();
 

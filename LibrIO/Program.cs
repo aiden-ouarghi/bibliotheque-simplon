@@ -30,7 +30,6 @@ builder.Services.AddSwaggerGen(c =>
 });
 var app = builder.Build(); 
 
-
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -41,8 +40,6 @@ if (app.Environment.IsDevelopment())
     });
 }
 
-
-// Initialiser la base de données avec un json (méthode seed)
 using (var scope = app.Services.CreateScope())
 {
     {
@@ -54,4 +51,3 @@ using (var scope = app.Services.CreateScope())
 app.MapControllers();
 
 app.Run();
-

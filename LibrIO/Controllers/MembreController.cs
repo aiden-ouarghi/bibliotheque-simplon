@@ -27,7 +27,7 @@ namespace LibrIO.Controllers
     OperationId = "PostMmembre")]
         [SwaggerResponse(200, "Membre créer !")]
         [SwaggerResponse(400, "Demande invalide")]
-        public IActionResult PostMembre(MembreDTO MembreDTO)
+        public IActionResult PostMembre([FromQuery]MembreDTO MembreDTO)
         {
             // information demander //
             var MembreEntite = new Membre()
@@ -36,6 +36,10 @@ namespace LibrIO.Controllers
                 Nom = MembreDTO.Nom,
                 Mail = MembreDTO.Mail
             };
+            if(MembreEntite == null)
+            {
+                return NotFound("Veuillez entrer des saisie correct");
+            }
             // Ajout a la DB
             _dbLivre.Membre.Add(MembreEntite);
             // sauvegarde
