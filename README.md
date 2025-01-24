@@ -9,19 +9,6 @@ LibrIO est une application de gestion de bibliothèque développée en .NET 9 av
 - .NET 9 SDK
 - Visual Studio 2022
 
-## Installation
-
-1. Clonez le dépôt :
-git clone https://github.com/votre-utilisateur/LibrIO.git
-
-
-2. Accédez au répertoire du projet :
-cd LibrIO
-
-3. Restaurez les packages NuGet :
-dotnet restore
-
-
 
 ## Installation
 1. Clonez le dépôt :
