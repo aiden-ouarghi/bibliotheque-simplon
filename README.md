@@ -83,7 +83,6 @@ L'API sera accessible à l'adresse https://localhost:7226 en développement.
 - `PUT /genres/{id}` : Met à jour les informations d'un genre existant par son ID.
 - `DELETE /genres/{id}` : Supprime un genre par son ID.
 
-Chaque route est maintenant bien alignée avec les backticks et les descriptions correspondantes.
 
 ## Swagger
 L'API utilise Swagger pour la documentation. En mode développement, vous pouvez accéder à la documentation Swagger à l'adresse https://localhost:7226/index.html.
